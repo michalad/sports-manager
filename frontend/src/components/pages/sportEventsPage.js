@@ -1,24 +1,19 @@
 "use strict"
-import React from 'react';
-import {ListGroup, ListGroupItem,  Grid, Row, Col, FormControl, FormGroup, ControlLabel, HelpBlock} from 'react-bootstrap';
-import {connect} from 'react-redux';
+import React from "react";
+import {Col, ControlLabel, FormControl, FormGroup, Grid, HelpBlock, Row, Table} from "react-bootstrap";
+import {connect} from "react-redux";
 
 const SportEventsPage = ({...props}) => {
     const {
         sportEvents,
     } = props;
-
-    console.log('....');
-    console.log(sportEvents);
     return (
         <div>
             <h1>LIST</h1>
             <Grid>
                 <Row className="show-grid">
                     <Col xs={8} md={4}>
-                        <ListGroup componentClass="ul">
-                            <ListItems sportEvents={sportEvents}/>
-                        </ListGroup>
+                        <EventsTable sportEvents={sportEvents}/>
                     </Col>
                     <Col xs={8} md={4}>
                         <form>
@@ -32,18 +27,36 @@ const SportEventsPage = ({...props}) => {
 };
 
 
-const FieldGroup = ({id, label, help, ...props}) => {
-    return (
-        <FormGroup controlId={id}>
-            <ControlLabel>{label}</ControlLabel>
-            <FormControl {...props} />
-            {help && <HelpBlock>{help}</HelpBlock>}
-        </FormGroup>
-    );
-};
+const FieldGroup = ({id, label, help, ...props}) => (
+    <FormGroup controlId={id}>
+        <ControlLabel>{label}</ControlLabel>
+        <FormControl {...props} />
+        {help && <HelpBlock>{help}</HelpBlock>}
+    </FormGroup>
+);
 
-const ListItems = ({sportEvents}) => sportEvents.map((sportEvent) =>
-    (<ListGroupItem>{sportEvent.name}</ListGroupItem>)
+const EventRows = ({sportEvents}) => (
+    sportEvents.map(sportEvent => (
+            <tr>
+                <td>{sportEvent.date}</td>
+                <td>{sportEvent.name}</td>
+            </tr>
+        )
+    )
+);
+
+const EventsTable = ({sportEvents}) => (
+    <Table striped bordered condensed hover>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <EventRows sportEvents={sportEvents}/>
+        </tbody>
+    </Table>
 );
 
 const mapStateToProps = state => (
@@ -51,8 +64,7 @@ const mapStateToProps = state => (
         sportEvents: state.sportEvents,
     });
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(SportEventsPage);
