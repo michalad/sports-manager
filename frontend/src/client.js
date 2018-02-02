@@ -1,7 +1,7 @@
 "use strict"
 import React from 'react';
 import {render} from 'react-dom';
-import {BrowserRouter, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom'
 import {Provider} from 'react-redux';
 import crateReduxStore from './app/createStore';
 
@@ -17,11 +17,11 @@ const PrimaryLayout = () => (
             Sports manager
         </header>
         <main>
-
-
-            <Route path="/sport-events" exact component={SportEventsPage}/>
-            <Route path="/sport-events/:id" component={SportEventDetailsPage}/>
-            <Redirect path="/" to="/sport-events"/>
+            <Switch>
+                <Route path='/sport-events/:id' exact component={SportEventDetailsPage}/>
+                <Route path="/sport-events" exact component={SportEventsPage}/>
+                <Redirect path="/" exact to="/sport-events"/>
+            </Switch>
         </main>
     </div>
 )
@@ -39,15 +39,4 @@ render(<App/>, document.getElementById('app'));
 store.subscribe(function () {
     console.log('current state is: ', store.getState());
     console.log('current price: ', store.getState().price);
-});
-
-// STEP 2 create and dispatch actions.js
-store.dispatch({
-    type: "POST_BOOK",
-    payload: {
-        id: 1,
-        title: 'this is the book title',
-        description: 'this is the book description ',
-        price: 33.33
-    }
 });

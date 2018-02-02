@@ -3,7 +3,7 @@ import React from "react";
 import {Col, ControlLabel, FormControl, FormGroup, Grid, HelpBlock, Row, Table} from "react-bootstrap";
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
-import {loadSportEvents} from '../../app/actions';
+import {loadSportEvents, createNewEvent} from '../../app/actions';
 
 class SportEventsPage extends React.Component {
 
@@ -22,14 +22,16 @@ class SportEventsPage extends React.Component {
             <div>
                 <h1>LIST</h1>
                 <Grid>
+                    <Row>
+                        <Col xs={8} md={4}>
+                            <form onSubmit={this.props.createNewEvent}>
+                                <FieldGroup id="formControlsText" type="text" label="Text" placeholder="Enter text"/>
+                            </form>
+                        </Col>
+                    </Row>
                     <Row className="show-grid">
                         <Col xs={8} md={4}>
                             <EventsTable sportEvents={sportEvents}/>
-                        </Col>
-                        <Col xs={8} md={4}>
-                            <form>
-                                <FieldGroup id="formControlsText" type="text" label="Text" placeholder="Enter text"/>
-                            </form>
                         </Col>
                     </Row>
                 </Grid>
@@ -61,13 +63,13 @@ const EventRow = ({sportEvent}) => (
 const EventsTable = ({sportEvents}) => (
     <Table striped bordered condensed hover>
         <thead>
-        <tr>
-            <th>Date</th>
-            <th>Name</th>
-        </tr>
+            <tr>
+                <th>Date</th>
+                <th>Name</th>
+            </tr>
         </thead>
         <tbody>
-        <EventRows sportEvents={sportEvents}/>
+            <EventRows sportEvents={sportEvents}/>
         </tbody>
     </Table>
 );
@@ -80,7 +82,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    loadSportEvents: loadSportEvents
+    loadSportEvents: loadSportEvents,
+    createNewEvent:  createNewEvent
 };
 
 

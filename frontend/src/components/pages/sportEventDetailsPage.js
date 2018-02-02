@@ -2,6 +2,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Col, Table} from "react-bootstrap";
+import {connect} from "react-redux";
 
 class SportEventDetailsPage extends React.Component {
     render() {
