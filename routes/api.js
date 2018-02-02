@@ -1,48 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const sportEventsController = require('../controller/sportEventsController');
 
-router.get('/sport-events', function (req, res, next) {
-    res.json([
-        {
-            "id": "123",
-            date: 'xxxxx',
-            name: 'sampleName1'
-        },
-        {
-            "id": "125",
-            date: 'xxxxx',
-            name: 'sampleName2'
-        },
-        {
-            "id": "124",
-            date: 'xxxxx',
-            name: 'sampleName3'
-        }
-    ]);
-});
-
-router.post('/sport-events', function (req, res, next) {
-    let eventBody = req.body;
-
-    console.log(eventBody);
-
-    if (!eventBody.name) {
-        res.status(400);
-        res.json({
-            message: "Missing name"
-        })
-    }
-
-    if (!eventBody.date) {
-        res.status(400);
-        res.json({
-            message: "Missing date"
-        })
-    }
-
-    res.sendStatus(201);
-
-});
+router.get('/sport-events', sportEventsController.getAllSportsEvents);
+router.post('/sport-events', sportEventsController.createSportEvent);
 
 /*{
     "teamA": {

@@ -25,7 +25,8 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "mongoose": "^4.13.4"
   },
   "devDependencies": {
     "redux-logger": "^3.0.6",
