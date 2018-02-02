@@ -38,7 +38,7 @@ store.subscribe(function () {
     console.log('current price: ', store.getState().price);
 });
 
-// STEP 2 create and dispatch actions
+// STEP 2 create and dispatch actions.js
 store.dispatch({
     type: "POST_BOOK",
     payload: {
