@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', api);
-app.get('*', function(req, res) {
+app.get('/', function(req, res) {
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 });
 
