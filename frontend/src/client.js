@@ -1,7 +1,7 @@
 "use strict"
 import React from 'react';
 import {render} from 'react-dom';
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Redirect} from 'react-router-dom'
 import {Provider} from 'react-redux';
 import crateReduxStore from './app/createStore';
 
@@ -17,8 +17,11 @@ const PrimaryLayout = () => (
             Sports manager
         </header>
         <main>
-            <Route path="/" exact component={SportEventsPage}/>
-            <Route path="/details" component={SportEventDetailsPage}/>
+
+
+            <Route path="/sport-events" exact component={SportEventsPage}/>
+            <Route path="/sport-events/:id" component={SportEventDetailsPage}/>
+            <Redirect path="/" to="/sport-events"/>
         </main>
     </div>
 )

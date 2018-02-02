@@ -1,7 +1,8 @@
 "use strict"
 import React from "react";
-import { Col, ControlLabel,FormControl, FormGroup, Grid, HelpBlock, Row, Table} from "react-bootstrap";
+import {Col, ControlLabel, FormControl, FormGroup, Grid, HelpBlock, Row, Table} from "react-bootstrap";
 import {connect} from "react-redux";
+import {Link} from 'react-router-dom';
 import {loadSportEvents} from '../../app/actions';
 
 class SportEventsPage extends React.Component {
@@ -9,12 +10,14 @@ class SportEventsPage extends React.Component {
     componentDidMount() {
         this.props.loadSportEvents();
     }
-    render({...props}) {
+
+    render() {
         const {
             sportEvents
         } = this.props;
         console.log('....', this.props);
         console.log(sportEvents);
+
         return (
             <div>
                 <h1>LIST</h1>
@@ -43,14 +46,16 @@ const FieldGroup = ({id, label, help, ...props}) => (
     </FormGroup>
 );
 
-const EventRows = ({sportEvents}) => (
-    sportEvents.map(sportEvent => (
-            <tr>
-                <td>{sportEvent.date}</td>
-                <td>{sportEvent.name}</td>
-            </tr>
-        )
+const EventRows = ({sportEvents}) => sportEvents.map(sportEvent => (
+        <EventRow key={sportEvent._id} sportEvent={sportEvent}/>
     )
+);
+
+const EventRow = ({sportEvent}) => (
+    <tr>
+        <td><Link to={`/sport-events/${sportEvent._id}`}>{sportEvent.date}</Link></td>
+        <td><Link to={`/sport-events/${sportEvent._id}`}>{sportEvent.name}</Link></td>
+    </tr>
 );
 
 const EventsTable = ({sportEvents}) => (
@@ -67,8 +72,8 @@ const EventsTable = ({sportEvents}) => (
     </Table>
 );
 
-const mapStateToProps = state =>{
-    console.log('mapStateToProps', state)
+const mapStateToProps = state => {
+    console.log('mapStateToProps', state);
     return {
         sportEvents: state.sportEvents,
     }
