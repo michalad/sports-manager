@@ -5,7 +5,7 @@ function createSportEvent(req, res, next) {
         if (err) {
             res.status(400).send({error: err})
         } else {
-            res.sendStatus(201);
+            res.status(201).send(sportEvent);
         }
     });
 }
