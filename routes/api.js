@@ -2,32 +2,15 @@ const express = require('express');
 const router = express.Router();
 const sportEventsController = require('../controller/sportEventsController');
 
-router.get('/sport-events', sportEventsController.getAllSportsEvents);
+router.get('/sport-events', sportEventsController.getAllSportEvents);
 router.post('/sport-events', sportEventsController.createSportEvent);
 
-/*{
-    "teamA": {
-    "name": "zc",
-        "result": 2
-},
-    "teamB": {
-    "name": "zc",
-        "result": 2
-}
-}*/
 router.post('/sport-events/:id/matches', function (req, res, next) {
     console.log(req.body);
     res.sendStatus(201);
 });
 
-router.get('/sport-events/:id/details', function (req, res, next) {
-    res.json(
-        {
-            date: 'xxxxx',
-            name: 'sampleName1'
-        }
-    );
-});
+router.get('/sport-events/:id/details', sportEventsController.getSportEventById);
 
 router.get('/sport-events/:id/matches', function (req, res, next) {
     res.json(

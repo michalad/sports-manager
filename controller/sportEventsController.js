@@ -10,7 +10,7 @@ function createSportEvent(req, res, next) {
     });
 }
 
-function getAllSportsEvents(req, res, next) {
+function getAllSportEvents(req, res, next) {
     SportsEvents.find(function (err, sportEvents) {
         if (err) {
             res.status(400).send({error: err})
@@ -20,9 +20,27 @@ function getAllSportsEvents(req, res, next) {
     })
 }
 
+function getSportEventById(req, res, next) {
+    let query = {
+        _id: req.params.id
+    };
+    SportsEvents.find(query, function (err, sportEvent) {
+        if (err) {
+            res.status(400).send({error: err})
+        } else {
+            if (sportEvent.length > 0) {
+                res.json(sportEvent);
+            } else {
+                res.sendStatus(404);
+            }
+        }
+    })
+}
+
 module.exports = {
     createSportEvent: createSportEvent,
-    getAllSportsEvents: getAllSportsEvents
+    getAllSportEvents: getAllSportEvents,
+    getSportEventById: getSportEventById
 };
 
 
