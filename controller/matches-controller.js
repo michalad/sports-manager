@@ -1,9 +1,11 @@
-const SportsEvents = require('../repository/models/sportsEvents');
+const sportEventsHelper = require('../helpers/sport-events-helper');
 const Match = require('../repository/models/match');
 
 function createMatch(req, res, next) {
     const sportEventId = req.params.id;
-    if (!checkSportEventExists(sportEventId)) {
+
+    // TODO this check does not work!!!!
+    if (!sportEventsHelper.checkSportEventExists(sportEventId)) {
         return res.status(400).send({error: 'Unable to find sport event with given id: ' + sportEventId})
     }
 
@@ -18,23 +20,9 @@ function createMatch(req, res, next) {
     });
 }
 
-function checkSportEventExists(id) {
-    let query = {
-        _id: id
-    };
-    return SportsEvents.find(query, function (err, sportEvent) {
-        if (err) {
-            return false;
-        } else {
-            console.log('XXX: ' + sportEvent);
-            return sportEvent.length > 0
-        }
-    })
-}
-
 function getMatchesForGivenEvent(req, res, next) {
     const sportEventId = req.params.id;
-    if (!checkSportEventExists(sportEventId)) {
+    if (!sportEventsHelper.checkSportEventExists(sportEventId)) {
         return res.status(400).send({error: 'Unable to find sport event with given id: ' + sportEventId})
     }
 
