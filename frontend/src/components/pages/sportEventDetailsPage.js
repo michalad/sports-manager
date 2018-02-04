@@ -4,6 +4,13 @@ import {connect} from "react-redux";
 import {Col, Row, Table} from "react-bootstrap";
 import AddMatchResultForm from "./AddMatchResultForm";
 import {loadMatches, loadStandings} from '../../app/actions';
+import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
+
+const grid = {
+    margin: '20px'
+
+};
 
 class SportEventDetailsPage extends React.Component {
 
@@ -20,19 +27,24 @@ class SportEventDetailsPage extends React.Component {
 
         return (
             <div>
-                <Row>
-                    <Col xs={8} md={6}>
-                        <AddMatchResultForm sportEventId={match.params.id}/>
-                    </Col>
-                </Row>
-                <Col xs={8} md={4}>
-                    <span>Matches:</span>
-                    <MatchesTable matches={this.props.matches}/>
-                </Col>
-                <Col xs={8} md={4}>
-                    <span>Standings:</span>
-                    <StandingsTable standings={this.props.standings}/>
-                </Col>
+                <Grid style={grid} container spacing={24}>
+                    <Grid item xs={12} sm={6}>
+                        <Paper><span>Matches:</span>
+                            <MatchesTable matches={this.props.matches}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <Paper>
+                            <AddMatchResultForm sportEventId={match.params.id}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper>
+                            <span>Standings:</span>
+                            <StandingsTable standings={this.props.standings}/>
+                        </Paper>
+                    </Grid>
+                </Grid>
             </div>
         );
     }
