@@ -1,9 +1,20 @@
 "use strict"
 import React from "react";
-import {Col, ControlLabel, FormControl, FormGroup, Grid, HelpBlock, Row, Table, Button} from "react-bootstrap";
+import {ControlLabel, FormControl, FormGroup, HelpBlock, Table, Button} from "react-bootstrap";
+import Paper from 'material-ui/Paper';
+import Grid from 'material-ui/Grid';
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
 import {loadSportEvents, createNewEvent} from '../../app/actions';
+
+
+const card = {
+    maxWidth: '400px',
+    padding: 16,
+    margin: 'auto',
+    marginTop: '20px'
+
+};
 
 class SportEventsPage extends React.Component {
 
@@ -42,21 +53,22 @@ class SportEventsPage extends React.Component {
 
         return (
             <div>
-                <h1>LIST</h1>
-                <Grid>
-                    <Row>
-                        <Col xs={8} md={4}>
+                <Grid container spacing={24}>
+                    <Grid item xs>
+                        <Paper style={card}>
                             <form onSubmit={this.handleSubmit}>
-                                <FieldGroup id="formControlsText" type="text" label="Text" placeholder="Enter text" value={this.state.value} onChange={this.handleChange}/>
+                                <FieldGroup id="formControlsText" type="text" label="Event name" placeholder="Enter text" value={this.state.value} onChange={this.handleChange}/>
                                 <Button type="submit">Add</Button>
                             </form>
-                        </Col>
-                    </Row>
-                    <Row className="show-grid">
-                        <Col xs={8} md={4}>
+                        </Paper>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={24}>
+                    <Grid item xs>
+                        <Paper style={card}>
                             <EventsTable sportEvents={sportEvents}/>
-                        </Col>
-                    </Row>
+                        </Paper>
+                    </Grid>
                 </Grid>
             </div>
         )

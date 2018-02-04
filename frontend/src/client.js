@@ -8,13 +8,28 @@ import crateReduxStore from './app/createStore';
 import SportEventsPage from './components/pages/sportEventsPage';
 import SportEventDetailsPage from './components/pages/sportEventDetailsPage';
 
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui-icons/Menu';
+
 const store = crateReduxStore();
 
 // STEP 1 create the store
 const PrimaryLayout = () => (
     <div className="primary-layout">
         <header>
-            Sports manager
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton  color="inherit" aria-label="Menu">
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography type="title" color="inherit" >
+                        Sports manager
+                    </Typography>
+                </Toolbar>
+            </AppBar>
         </header>
         <main>
             <Switch>
