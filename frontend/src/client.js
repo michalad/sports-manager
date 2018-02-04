@@ -38,5 +38,4 @@ render(<App/>, document.getElementById('app'));
 
 store.subscribe(function () {
     console.log('current state is: ', store.getState());
-    console.log('current price: ', store.getState().price);
 });
