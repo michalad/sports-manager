@@ -7,8 +7,30 @@ import {loadSportEvents, createNewEvent} from '../../app/actions';
 
 class SportEventsPage extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: ''
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     componentDidMount() {
         this.props.loadSportEvents();
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault()
+        this.props.createNewEvent({
+            name: this.state.value,
+            date: new Date()
+        });
     }
 
     render() {
@@ -24,8 +46,8 @@ class SportEventsPage extends React.Component {
                 <Grid>
                     <Row>
                         <Col xs={8} md={4}>
-                            <form onSubmit={this.props.createNewEvent}>
-                                <FieldGroup id="formControlsText" type="text" label="Text" placeholder="Enter text"/>
+                            <form onSubmit={this.handleSubmit}>
+                                <FieldGroup id="formControlsText" type="text" label="Text" placeholder="Enter text" value={this.state.value} onChange={this.handleChange}/>
                             </form>
                         </Col>
                     </Row>

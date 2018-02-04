@@ -35,7 +35,3 @@ const App = () => (
 );
 
 render(<App/>, document.getElementById('app'));
-
-store.subscribe(function () {
-    console.log('current state is: ', store.getState());
-});

@@ -49,21 +49,69 @@ const loadStandings = (id) => (dispatch) => {
 };
 
 const createNewEvent = (newSportEvent) => (dispatch) => {
-    newSportEvent.preventDefault();
-    return fetch('/api/sport-events', {method: 'POST', body: JSON.stringify(newSportEvent)})
+    return fetch('/api/sport-events', {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify(newSportEvent),})
         .then((response) => {
             if (!response.ok) {
                 throw Error(response.statusText);
             }
             return response.json();
         })
-        .then((sportEvents) =>
+        .then((sportEvent) =>
             dispatch({
-                type: 'SPORT_EVENTS_LOADED',
-                sportEvents
+                type: 'NEW_SPORT_EVENT_SAVED',
+                sportEvent
             })
         );
 };
 
+const loadMatches = (sportEventId) => (dispatch) => {
+    return fetch(`/api/sport-events/${sportEventId}/matches`)
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((matches) =>
+            dispatch({
+                type: 'MATCHES_LOADED',
+                matches
+            })
+        );
+};
+
+
+
+const addMatchResult = (newMatchResult) => (dispatch) => {
+    console.log('newMatchResult !!!', newMatchResult);
+    return fetch(`/api/sport-events/${newMatchResult.sportEventId}/matches`, {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify({
+            teamA: {
+                name: newMatchResult.teamAName,
+                result: newMatchResult.teamAResult
+            },
+            teamB: {
+                name: newMatchResult.teamBName,
+                result: newMatchResult.teamBResult
+            }
+        },),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((matchResult) =>
+            dispatch({
+                type: 'NEW_MATCH_RESULT_SAVED',
+                matchResult
+            })
+        );
+};
+
+export {loadSportEvents, createNewEvent, loadMatches, addMatchResult};
 export {loadSportEvents, createNewEvent, loadMatches, loadStandings};
 
