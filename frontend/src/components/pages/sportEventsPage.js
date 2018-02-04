@@ -1,15 +1,16 @@
 "use strict"
 import React from "react";
-import {Table} from "react-bootstrap";
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
 import {loadSportEvents, createNewEvent} from '../../app/actions';
 import Input, {InputLabel} from 'material-ui/Input';
-import {FormControl, FormHelperText} from 'material-ui/Form';
+import {FormControl} from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Moment from 'moment';
 
 
 const card = {
@@ -110,24 +111,25 @@ const EventRows = ({sportEvents}) => sportEvents.map(sportEvent => (
 );
 
 const EventRow = ({sportEvent}) => (
-    <tr>
-        <td><Link to={`/sport-events/${sportEvent._id}`}>{sportEvent.date}</Link></td>
-        <td><Link to={`/sport-events/${sportEvent._id}`}>{sportEvent.name}</Link></td>
-    </tr>
+    <TableRow key={sportEvent.id}>
+        <TableCell><Link to={`/sport-events/${sportEvent._id}`}>{Moment(sportEvent.date).format('MMMM Do YYYY')}</Link></TableCell>
+        <TableCell><Link to={`/sport-events/${sportEvent._id}`}>{sportEvent.name}</Link></TableCell>
+    </TableRow>
 );
 
 const EventsTable = ({sportEvents}) => (
-    <Table striped bordered condensed hover>
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <EventRows sportEvents={sportEvents}/>
-        </tbody>
+    <Table >
+        <TableHead>
+            <TableRow>
+                <TableCell>Date</TableCell>
+                <TableCell>Name</TableCell>
+            </TableRow>
+        </TableHead>
+        <TableBody>
+            <EventRows sportEvents={sportEvents}/>
+        </TableBody>
     </Table>
+
 );
 
 const mapStateToProps = state => {
