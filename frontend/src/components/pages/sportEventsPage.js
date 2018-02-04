@@ -1,18 +1,22 @@
 "use strict"
 import React from "react";
-import {ControlLabel, FormControl, FormGroup, HelpBlock, Table, Button} from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
 import {loadSportEvents, createNewEvent} from '../../app/actions';
+import Input, {InputLabel} from 'material-ui/Input';
+import {FormControl, FormHelperText} from 'material-ui/Form';
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
 
 
 const card = {
-    maxWidth: '400px',
+    maxWidth: '600px',
     padding: 16,
     margin: 'auto',
-    marginTop: '20px'
+    marginTop: '20px',
 
 };
 
@@ -21,7 +25,8 @@ class SportEventsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: ''
+            value: '',
+            date: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -33,14 +38,17 @@ class SportEventsPage extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState({
+            value: event.target.value,
+            date: event.target.date
+        });
     }
 
     handleSubmit(event) {
         event.preventDefault();
         this.props.createNewEvent({
             name: this.state.value,
-            date: new Date()
+            date: this.state.date
         });
     }
 
@@ -57,8 +65,28 @@ class SportEventsPage extends React.Component {
                     <Grid item xs>
                         <Paper style={card}>
                             <form onSubmit={this.handleSubmit}>
-                                <FieldGroup id="formControlsText" type="text" label="Event name" placeholder="Enter text" value={this.state.value} onChange={this.handleChange}/>
-                                <Button type="submit">Add</Button>
+                                <FormControl fullWidth>
+                                    <InputLabel htmlFor="event-name">Event name</InputLabel>
+                                    <Input id="event-name" value={this.state.value}
+                                           onChange={this.handleChange}/>
+                                </FormControl>
+                                <FormControl fullWidth>
+                                    <TextField
+                                        id="date"
+                                        label="Event date"
+                                        type="date"
+                                        value={this.state.date}
+                                        onChange={this.handleChange}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                </FormControl>
+                                <FormControl margin='normal'>
+                                    <Button type="submit" raised color="primary">
+                                        Add
+                                    </Button>
+                                </FormControl>
                             </form>
                         </Paper>
                     </Grid>
@@ -75,13 +103,6 @@ class SportEventsPage extends React.Component {
     }
 }
 
-const FieldGroup = ({id, label, help, ...props}) => (
-    <FormGroup controlId={id}>
-        <ControlLabel>{label}</ControlLabel>
-        <FormControl {...props} />
-        {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-);
 
 const EventRows = ({sportEvents}) => sportEvents.map(sportEvent => (
         <EventRow key={sportEvent._id} sportEvent={sportEvent}/>
@@ -98,13 +119,13 @@ const EventRow = ({sportEvent}) => (
 const EventsTable = ({sportEvents}) => (
     <Table striped bordered condensed hover>
         <thead>
-            <tr>
-                <th>Date</th>
-                <th>Name</th>
-            </tr>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+        </tr>
         </thead>
         <tbody>
-            <EventRows sportEvents={sportEvents}/>
+        <EventRows sportEvents={sportEvents}/>
         </tbody>
     </Table>
 );
@@ -118,7 +139,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     loadSportEvents: loadSportEvents,
-    createNewEvent:  createNewEvent
+    createNewEvent: createNewEvent
 };
 
 
