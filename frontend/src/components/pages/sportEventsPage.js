@@ -1,6 +1,6 @@
 "use strict"
 import React from "react";
-import {Col, ControlLabel, FormControl, FormGroup, Grid, HelpBlock, Row, Table} from "react-bootstrap";
+import {Col, ControlLabel, FormControl, FormGroup, Grid, HelpBlock, Row, Table, Button} from "react-bootstrap";
 import {connect} from "react-redux";
 import {Link} from 'react-router-dom';
 import {loadSportEvents, createNewEvent} from '../../app/actions';
@@ -26,7 +26,7 @@ class SportEventsPage extends React.Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault()
+        event.preventDefault();
         this.props.createNewEvent({
             name: this.state.value,
             date: new Date()
@@ -48,6 +48,7 @@ class SportEventsPage extends React.Component {
                         <Col xs={8} md={4}>
                             <form onSubmit={this.handleSubmit}>
                                 <FieldGroup id="formControlsText" type="text" label="Text" placeholder="Enter text" value={this.state.value} onChange={this.handleChange}/>
+                                <Button type="submit">Add</Button>
                             </form>
                         </Col>
                     </Row>

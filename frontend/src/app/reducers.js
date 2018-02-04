@@ -1,11 +1,13 @@
 import {combineReducers} from 'redux';
-import { reducer as formReducer } from 'redux-form'
+import {reducer as formReducer} from 'redux-form'
 
 
 const reducer = function (prevState = [], action) {
     switch (action.type) {
         case 'SPORT_EVENTS_LOADED':
             return action.sportEvents;
+        case 'NEW_SPORT_EVENT_SAVED':
+            return [...prevState, action.sportEvent];
         default:
             return [];
 
@@ -15,7 +17,7 @@ const reducer = function (prevState = [], action) {
 const matchesReducers = (prevState = [], action) => {
     switch (action.type) {
         case 'MATCHES_LOADED': {
-            return  action.matches;
+            return action.matches;
         }
         case 'NEW_MATCH_RESULT_SAVED': {
             return [...prevState, action.matchResult];
@@ -31,7 +33,6 @@ const standingsReducer = function (state = [], action) {
         case 'STANDINGS_LOADED':
             return action.standings;
         default:
-            console.log('returning default');
             return [...state];
     }
 };
