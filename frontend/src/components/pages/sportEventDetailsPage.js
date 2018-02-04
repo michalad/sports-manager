@@ -48,6 +48,19 @@ const MatchesTable = ({matches}) => (
 
 const StandingsTable = ({standings}) => (
     <Table striped bordered condensed hover>
+        <thead>
+        <tr>
+            <th>Team</th>
+            <th>Played</th>
+            <th>Won</th>
+            <th>Draw</th>
+            <th>Loss</th>
+            <th>Goals for</th>
+            <th>Goals against</th>
+            <th>Goals difference</th>
+            <th>Points</th>
+        </tr>
+        </thead>
         <tbody>
         <StandingsRows standings={standings}/>
         </tbody>
@@ -70,9 +83,14 @@ const StandingsRows = ({standings}) => (
     standings.map(standing => (
         <tr>
             <td>{standing.team}</td>
-            <td>{standing.points}</td>
             <td>{standing.played}</td>
             <td>{standing.won}</td>
+            <td>{standing.draw}</td>
+            <td>{standing.loss}</td>
+            <td>{standing.goalsFor}</td>
+            <td>{standing.goalsAgainst}</td>
+            <td>{standing.goalDifference}</td>
+            <td><b>{standing.points}</b></td>
 
         </tr>
     ))
