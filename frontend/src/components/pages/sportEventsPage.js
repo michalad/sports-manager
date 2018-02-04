@@ -31,6 +31,7 @@ class SportEventsPage extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeDate = this.handleChangeDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -40,8 +41,13 @@ class SportEventsPage extends React.Component {
 
     handleChange(event) {
         this.setState({
-            value: event.target.value,
-            date: event.target.date
+            value: event.target.value
+        });
+    }
+
+    handleChangeDate(event) {
+        this.setState({
+            date: event.target.value
         });
     }
 
@@ -77,7 +83,7 @@ class SportEventsPage extends React.Component {
                                         label="Event date"
                                         type="date"
                                         value={this.state.date}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleChangeDate}
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
