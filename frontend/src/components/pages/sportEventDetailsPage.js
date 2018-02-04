@@ -3,16 +3,9 @@ import React from "react";
 import {connect} from "react-redux";
 import {Col, Row, Table} from "react-bootstrap";
 import AddMatchResultForm from "./AddMatchResultForm";
-import {loadMatches} from "../../app/actions"
-import {Col, Table} from "react-bootstrap";
 import {loadMatches, loadStandings} from '../../app/actions';
 
 class SportEventDetailsPage extends React.Component {
-
-    componentDidMount() {
-        this.props.loadMatches(this.props.match.params.id);
-    }
-
 
     componentDidMount() {
         this.props.loadMatches(this.props.match.params.id);
@@ -27,6 +20,11 @@ class SportEventDetailsPage extends React.Component {
 
         return (
             <div>
+                <Row>
+                    <Col xs={8} md={6}>
+                        <AddMatchResultForm sportEventId={match.params.id}/>
+                    </Col>
+                </Row>
                 <Col xs={8} md={4}>
                     <span>Matches:</span>
                     <MatchesTable matches={this.props.matches}/>
@@ -35,17 +33,6 @@ class SportEventDetailsPage extends React.Component {
                     <span>Standings:</span>
                     <StandingsTable standings={this.props.standings}/>
                 </Col>
-                <Row>
-                    <Col xs={8} md={6}>
-                        <AddMatchResultForm sportEventId={match.params.id}/>
-                    </Col>
-                </Row>
-                <Row>
-
-                    <Col xs={8} md={4}>
-                        <MatchesTable matches={matches}/>
-                    </Col>
-                </Row>
             </div>
         );
     }
@@ -100,7 +87,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    loadMatches: loadMatches
+    loadMatches: loadMatches,
+    loadStandings: loadStandings,
 };
 
 

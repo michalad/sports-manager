@@ -12,19 +12,6 @@ const reducer = function (prevState = [], action) {
     }
 };
 
-const matchesReducer = function (state = {}, action) {
-    switch (action.type) {
-        case 'MATCHES_LOADED':
-            return action.matches;
-        case 'NEW_SPORT_EVENT_SAVED': {
-            return [...prevState, action.sportEvent];
-        }
-        default:
-            return [...prevState];
-        }
-    }
-};
-
 const matchesReducers = (prevState = [], action) => {
     switch (action.type) {
         case 'MATCHES_LOADED': {
@@ -35,16 +22,17 @@ const matchesReducers = (prevState = [], action) => {
         }
         default: {
             return [...prevState];
+        }
     }
 };
 
-const standingsReducer = function (state = {}, action) {
+const standingsReducer = function (state = [], action) {
     switch (action.type) {
         case 'STANDINGS_LOADED':
             return action.standings;
         default:
             console.log('returning default');
-            return [];
+            return [...state];
     }
 };
 
@@ -52,9 +40,6 @@ const standingsReducer = function (state = {}, action) {
 export default combineReducers({
     form: formReducer,
     sportEvents: reducer,
-    standings: () => [],
     matches: matchesReducers,
-
     standings: standingsReducer,
-    matches: matchesReducer,
 });

@@ -14,23 +14,6 @@ const loadSportEvents = () => (dispatch) => {
         );
 };
 
-const loadMatches = (id) => (dispatch) => {
-    return fetch(`/api/sport-events/${id}/matches`)
-        .then((response) => {
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response.json();
-        })
-        .then((matches) => {
-                dispatch({
-                    type: 'MATCHES_LOADED',
-                    matches
-                })
-            }
-        );
-};
-
 const loadStandings = (id) => (dispatch) => {
     return fetch(`/api/sport-events/${id}/table`)
         .then((response) => {
@@ -112,6 +95,5 @@ const addMatchResult = (newMatchResult) => (dispatch) => {
         );
 };
 
-export {loadSportEvents, createNewEvent, loadMatches, addMatchResult};
-export {loadSportEvents, createNewEvent, loadMatches, loadStandings};
+export {loadSportEvents, createNewEvent, loadMatches, addMatchResult, loadStandings};
 
