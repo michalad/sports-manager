@@ -66,7 +66,6 @@ const loadMatches = (sportEventId) => (dispatch) => {
 
 
 const addMatchResult = (newMatchResult) => (dispatch) => {
-    console.log('newMatchResult !!!', newMatchResult);
     return fetch(`/api/sport-events/${newMatchResult.sportEventId}/matches`, {
         method: 'POST',
         headers: {'content-type': 'application/json'},
@@ -87,11 +86,13 @@ const addMatchResult = (newMatchResult) => (dispatch) => {
             }
             return response.json();
         })
-        .then((matchResult) =>
-            dispatch({
-                type: 'NEW_MATCH_RESULT_SAVED',
-                matchResult
-            })
+        .then((matchResult) => {
+                dispatch({
+                    type: 'NEW_MATCH_RESULT_SAVED',
+                    matchResult
+                });
+            dispatch(loadStandings(newMatchResult.sportEventId));
+            }
         );
 };
 
