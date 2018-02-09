@@ -63,7 +63,21 @@ const loadMatches = (sportEventId) => (dispatch) => {
         );
 };
 
-
+const loadTeams = (sportEventId) => (dispatch) => {
+    return fetch(`/api/sport-events/${sportEventId}/teams`)
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((teams) =>
+            dispatch({
+                type: 'TEAMS_LOADED',
+                teams
+            })
+        );
+};
 
 const addMatchResult = (newMatchResult) => (dispatch) => {
     return fetch(`/api/sport-events/${newMatchResult.sportEventId}/matches`, {
@@ -96,5 +110,28 @@ const addMatchResult = (newMatchResult) => (dispatch) => {
         );
 };
 
-export {loadSportEvents, createNewEvent, loadMatches, addMatchResult, loadStandings};
+const addTeam = (newTeam) => (dispatch) => {
+    return fetch(`/api/sport-events/${newTeam.sportEventId}/teams`, {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify({
+            name: newTeam.name
+        },),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then((team) => {
+                dispatch({
+                    type: 'NEW_TEAM_SAVED',
+                    team
+                });
+            }
+        );
+};
+
+export {loadSportEvents, createNewEvent, loadMatches, addMatchResult, loadStandings, addTeam, loadTeams};
 

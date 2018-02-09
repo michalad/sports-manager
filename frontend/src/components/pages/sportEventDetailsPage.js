@@ -1,9 +1,10 @@
 "use strict";
 import React from "react";
 import {connect} from "react-redux";
-import {Col, Row, Table} from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import AddMatchResultForm from "./AddMatchResultForm";
-import {loadMatches, loadStandings} from '../../app/actions';
+import AddTeamForm from './AddTeamForm'
+import {loadMatches, loadStandings, loadTeams} from '../../app/actions';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 
@@ -17,12 +18,13 @@ class SportEventDetailsPage extends React.Component {
     componentDidMount() {
         this.props.loadMatches(this.props.match.params.id);
         this.props.loadStandings(this.props.match.params.id);
+        this.props.loadTeams(this.props.match.params.id);
     }
 
     render() {
 
         const {
-            matches, match
+            matches, teams, match
         } = this.props;
 
         return (
@@ -35,13 +37,18 @@ class SportEventDetailsPage extends React.Component {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <Paper>
-                            <AddMatchResultForm sportEventId={match.params.id}/>
+                            <AddMatchResultForm sportEventId={match.params.id} teams={teams}/>
                         </Paper>
                     </Grid>
                     <Grid item xs={12}>
                         <Paper>
                             <span>Standings:</span>
                             <StandingsTable standings={this.props.standings}/>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Paper>
+                            <AddTeamForm sportEventId={match.params.id}/>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -119,6 +126,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     loadMatches: loadMatches,
     loadStandings: loadStandings,
+    loadTeams: loadTeams,
 };
 
 

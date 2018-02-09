@@ -28,6 +28,21 @@ const matchesReducers = (prevState = [], action) => {
     }
 };
 
+
+const teamsReducers = (prevState = [], action) => {
+    switch (action.type) {
+        case 'TEAMS_LOADED': {
+            return action.teams;
+        }
+        case 'NEW_TEAM_SAVED': {
+            return [...prevState, action.team];
+        }
+        default: {
+            return [...prevState];
+        }
+    }
+};
+
 const standingsReducer = function (state = [], action) {
     switch (action.type) {
         case 'STANDINGS_LOADED':
@@ -43,4 +58,5 @@ export default combineReducers({
     sportEvents: reducer,
     matches: matchesReducers,
     standings: standingsReducer,
+    teams: teamsReducers,
 });

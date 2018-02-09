@@ -1,41 +1,98 @@
 "use strict";
 import React from "react";
 import {connect} from "react-redux";
-import {Button, Form, FormControl, FormGroup} from "react-bootstrap";
 import {Field, reduxForm} from "redux-form";
 import {addMatchResult} from "../../app/actions"
+import Input, {InputLabel} from 'material-ui/Input';
+import Select from 'material-ui/Select';
+import {MenuItem} from 'material-ui/Menu';
+import {FormControl} from 'material-ui/Form';
+import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
 
-let AddMatchResultForm = ({...props}) => {
-    const { handleSubmit, sportEventId } = props;
-    props.change('sportEventId', sportEventId);
-    return (<Form onSubmit={handleSubmit} inline>
-        <FormGroup>
-            <Field name='teamAName'  component={(field) => {
-                return (<FormControl {...field.input} type="text" placeholder="Team A Name" bsSize="small"/>);
-            }}/>
-            <Field name='teamAResult'  component={(field) => (
-                <FormControl  {...field.input} type="number" placeholder="Team A result" bsSize="small"/>
-            )}/>
-            -
-            <Field name='teamBResult' component={(field) => (
-                <FormControl  {...field.input} type="number" placeholder="Team B Result" bsSize="small"/>
-            )}/>
-            <Field name='teamBName' component={(field) => (
-                <FormControl  {...field.input} type="text" placeholder="Team B Name" bsSize="small"/>
-            )} />
-            <Field  name="sportEventId" component={(field) =>(
-                <input {...field.input} type="hidden" />
-            )} />
-            <Button type="submit">Add</Button>
-        </FormGroup>
-    </Form>);
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 80,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing.unit * 2,
+    },
+});
+
+class AddMatchResultForm extends React.Component {
+
+    componentDidMount() {
+        const {sportEventId} = this.props;
+        this.props.change('sportEventId', sportEventId);
+    }
+
+    render() {
+        const {handleSubmit, sportEventId, teams, classes} = this.props;
+
+        return (
+            <form onSubmit={handleSubmit} className={classes.container} inline>
+
+                <TeamSelect name='teamAName' label='Team A Name' teams={teams} classes={classes}/>
+                <ResultField name='teamAResult' label="Team A Result" placeholder="Result" classes={classes}/>
+                -
+                <ResultField name='teamBResult' label="Team B Result" placeholder="Result" classes={classes}/>
+                <TeamSelect name='teamBName' label='Team B Name' teams={teams} classes={classes}/>
+                <Field name="sportEventId" component={(field) => (
+                    <input {...field.input} type="hidden"/>
+                )}/>
+                <Button type="submit" variant="raised" color="primary">Add</Button>
+            </form>
+        );
+    }
 };
 
-const mapStateToProps = state => ({});
+const TeamSelect = ({name, label, teams, classes}) => (
+    <Field name={name}
+           component={(field) => (
+               <FormControl className={classes.formControl}>
+                   <InputLabel forHtml={field.input.name}>{label}</InputLabel>
+                   <Select
+                       value={field.input.value}
+                       onChange={field.input.onChange}
+                       inputProps={{
+                           name: field.input.name
+                       }}
+                       children={field.children}
+                   >
+
+                   </Select>
+               </FormControl>
+           )
+           }>
+        {teams.map((team) => (
+            <MenuItem value={team.name} key={team.name}>{team.name}</MenuItem>
+        ))}
+    </Field>
+);
+
+const ResultField = ({name, label, placeholder, classes}) => (
+    <Field name={name} component={(field) => (
+        <FormControl className={classes.formControl}>
+            <InputLabel forHtml={field.input.name}>{label}</InputLabel>
+            <Input {...field.input} type="number" placeholder={placeholder}/>
+        </FormControl>
+    )}/>
+);
+
+const mapStateToProps = state => ({
+    teams: state.teams
+});
 
 const mapDispatchToProps = {
     onSubmit: addMatchResult
 };
+
+AddMatchResultForm = withStyles(styles)(AddMatchResultForm);
 
 AddMatchResultForm = reduxForm({
     form: 'addMatchForm'
