@@ -1,17 +1,19 @@
 "use strict";
 import React from "react";
 import {connect} from "react-redux";
-import {Table} from "react-bootstrap";
+import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import AddMatchResultForm from "./AddMatchResultForm";
 import AddTeamForm from './AddTeamForm'
 import {loadMatches, loadStandings, loadTeams} from '../../app/actions';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import {withStyles} from 'material-ui/styles';
 
-const grid = {
-    margin: '20px'
-
-};
+const styles = theme => ({
+    grid: {
+        margin: '20px'
+    }
+});
 
 class SportEventDetailsPage extends React.Component {
 
@@ -24,12 +26,12 @@ class SportEventDetailsPage extends React.Component {
     render() {
 
         const {
-            matches, teams, match
+            matches, teams, match, classes
         } = this.props;
 
         return (
             <div>
-                <Grid style={grid} container spacing={24}>
+                <Grid className={classes.grid} container spacing={24}>
                     <Grid item xs={12} sm={6}>
                         <Paper><span>Matches:</span>
                             <MatchesTable matches={this.props.matches}/>
@@ -58,41 +60,41 @@ class SportEventDetailsPage extends React.Component {
 }
 
 const MatchesTable = ({matches}) => (
-    <Table striped bordered condensed hover>
-        <tbody>
-        <MatchRows matches={matches}/>
-        </tbody>
+    <Table>
+        <TableBody>
+            <MatchRows matches={matches}/>
+        </TableBody>
     </Table>
 );
 
 const StandingsTable = ({standings}) => (
-    <Table striped bordered condensed hover>
-        <thead>
-        <tr>
-            <th>Team</th>
-            <th>Played</th>
-            <th>Won</th>
-            <th>Draw</th>
-            <th>Loss</th>
-            <th>Goals for</th>
-            <th>Goals against</th>
-            <th>Goals difference</th>
-            <th>Points</th>
-        </tr>
-        </thead>
-        <tbody>
-        <StandingsRows standings={standings}/>
-        </tbody>
+    <Table>
+        <TableHead>
+            <TableRow>
+                <TableCell>Team</TableCell>
+                <TableCell>Played</TableCell>
+                <TableCell>Won</TableCell>
+                <TableCell>Draw</TableCell>
+                <TableCell>Loss</TableCell>
+                <TableCell>Goals for</TableCell>
+                <TableCell>Goals against</TableCell>
+                <TableCell>Goals difference</TableCell>
+                <TableCell>Points</TableCell>
+            </TableRow>
+        </TableHead>
+        <TableBody>
+            <StandingsRows standings={standings}/>
+        </TableBody>
     </Table>
 );
 
 const MatchRows = ({matches}) => (
     matches.map(match => (
-        <tr>
-            <td>{match.teamA.name}</td>
-            <td>{`${match.teamA.result} - ${match.teamB.result}`}</td>
-            <td>{match.teamB.name}</td>
-        </tr>
+        <TableRow>
+            <TableCell>{match.teamA.name}</TableCell>
+            <TableCell>{`${match.teamA.result} - ${match.teamB.result}`}</TableCell>
+            <TableCell>{match.teamB.name}</TableCell>
+        </TableRow>
     ))
 
 );
@@ -100,18 +102,18 @@ const MatchRows = ({matches}) => (
 
 const StandingsRows = ({standings}) => (
     standings.map(standing => (
-        <tr>
-            <td>{standing.team}</td>
-            <td>{standing.played}</td>
-            <td>{standing.won}</td>
-            <td>{standing.draw}</td>
-            <td>{standing.loss}</td>
-            <td>{standing.goalsFor}</td>
-            <td>{standing.goalsAgainst}</td>
-            <td>{standing.goalDifference}</td>
-            <td><b>{standing.points}</b></td>
+        <TableRow>
+            <TableCell>{standing.team}</TableCell>
+            <TableCell>{standing.played}</TableCell>
+            <TableCell>{standing.won}</TableCell>
+            <TableCell>{standing.draw}</TableCell>
+            <TableCell>{standing.loss}</TableCell>
+            <TableCell>{standing.goalsFor}</TableCell>
+            <TableCell>{standing.goalsAgainst}</TableCell>
+            <TableCell>{standing.goalDifference}</TableCell>
+            <TableCell><b>{standing.points}</b></TableCell>
 
-        </tr>
+        </TableRow>
     ))
 
 );
@@ -130,6 +132,6 @@ const mapDispatchToProps = {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SportEventDetailsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SportEventDetailsPage));
 
 
