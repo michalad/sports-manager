@@ -37,11 +37,10 @@ class AddMatchResultForm extends React.Component {
         return (
             <form onSubmit={handleSubmit} className={classes.container} inline>
 
-                <TeamSelect name='teamAName' label='Team A Name' teams={teams} classes={classes}/>
-                <ResultField name='teamAResult' label="Team A Result" placeholder="Result" classes={classes}/>
-                -
-                <ResultField name='teamBResult' label="Team B Result" placeholder="Result" classes={classes}/>
-                <TeamSelect name='teamBName' label='Team B Name' teams={teams} classes={classes}/>
+                <TeamSelect name='teamAName' label='Team' teams={teams} classes={classes}/>
+                <ResultField name='teamAResult' label="Result" placeholder="Result" classes={classes}/>
+                <ResultField name='teamBResult' label="Result" placeholder="Result" classes={classes}/>
+                <TeamSelect name='teamBName' label='Team' teams={teams} classes={classes}/>
                 <Field name="sportEventId" component={(field) => (
                     <input {...field.input} type="hidden"/>
                 )}/>

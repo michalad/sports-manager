@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import AddMatchResultForm from "./AddMatchResultForm";
 import AddTeamForm from './AddTeamForm'
+import Typography from 'material-ui/Typography';
 import {loadMatches, loadStandings, loadTeams} from '../../app/actions';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
@@ -11,7 +12,7 @@ import {withStyles} from 'material-ui/styles';
 
 const styles = theme => ({
     grid: {
-        margin: '20px'
+        marginTop: '10px'
     }
 });
 
@@ -33,7 +34,10 @@ class SportEventDetailsPage extends React.Component {
             <div>
                 <Grid className={classes.grid} container spacing={24}>
                     <Grid item xs={12} sm={6}>
-                        <Paper><span>Matches:</span>
+                        <Paper>
+                            <Typography color="primary" >
+                                Matches
+                            </Typography>
                             <MatchesTable matches={this.props.matches}/>
                         </Paper>
                     </Grid>
@@ -44,7 +48,9 @@ class SportEventDetailsPage extends React.Component {
                     </Grid>
                     <Grid item xs={12}>
                         <Paper>
-                            <span>Standings:</span>
+                            <Typography color="primary" >
+                                Standings
+                            </Typography>
                             <StandingsTable standings={this.props.standings}/>
                         </Paper>
                     </Grid>
