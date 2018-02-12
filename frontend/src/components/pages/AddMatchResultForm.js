@@ -44,7 +44,9 @@ class AddMatchResultForm extends React.Component {
                 <Field name="sportEventId" component={(field) => (
                     <input {...field.input} type="hidden"/>
                 )}/>
-                <Button type="submit" variant="raised" color="primary">Add</Button>
+                <FormControl margin='normal'>
+                    <Button type="submit" raised color="primary">Add</Button>
+                </FormControl>
             </form>
         );
     }
