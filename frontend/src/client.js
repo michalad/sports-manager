@@ -7,6 +7,7 @@ import crateReduxStore from './app/createStore';
 
 import SportEventsPage from './components/pages/sportEventsPage';
 import SportEventDetailsPage from './components/pages/sportEventDetailsPage';
+import LoginPage from "./components/login/LoginPage";
 
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -35,11 +36,12 @@ const PrimaryLayout = () => (
             <Switch>
                 <Route path='/sport-events/:id' exact component={SportEventDetailsPage}/>
                 <Route path="/sport-events" exact component={SportEventsPage}/>
+                <Route path="/login" exact component={LoginPage}/>
                 <Redirect path="/" exact to="/sport-events"/>
             </Switch>
         </main>
     </div>
-)
+);
 
 const App = () => (
     <Provider store={store}>

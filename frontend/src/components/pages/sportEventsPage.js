@@ -139,7 +139,6 @@ const EventsTable = ({sportEvents}) => (
 );
 
 const mapStateToProps = state => {
-    console.log('mapStateToProps', state);
     return {
         sportEvents: state.sportEvents,
     }
