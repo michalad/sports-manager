@@ -1,7 +1,7 @@
 
 
 const login = (loginData) => (dispatch) => {
-    console.log('Login Data: ' + loginData)
+    console.log('Login Data: ' + JSON.stringify(loginData))
 };
 
 
