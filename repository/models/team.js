@@ -13,5 +13,4 @@ let teamSchema = mongoDbClient.Schema({
     }
 });
 
-let MatchSchema = mongoDbClient.model('Team', teamSchema);
-module.exports = MatchSchema;
+module.exports = mongoDbClient.model('Team', teamSchema);
