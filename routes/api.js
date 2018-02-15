@@ -5,6 +5,7 @@ const matchesController = require('../controller/matches-controller');
 const teamController = require('../controller/team-controller');
 const tableController = require('../controller/table-controller');
 const registrationController = require('../controller/auth/registration-controller');
+const loginController = require('../controller/auth/login-controller');
 
 router.get('/sport-events', sportEventsController.getAllSportEvents);
 router.post('/sport-events', sportEventsController.createSportEvent);
@@ -19,5 +20,6 @@ router.get('/sport-events/:id/teams', teamController.getTeamsForGivenEvent);
 router.get('/sport-events/:id/table', tableController.getTableForCurrentSportEvent);
 
 router.post('/register', registrationController.register);
+router.post('/login', loginController.login);
 
 module.exports = router;
