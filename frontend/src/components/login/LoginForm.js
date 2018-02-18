@@ -42,7 +42,7 @@ class LoginForm extends React.Component {
                             <Field name="password" component={(field) => (
                                 <FormControl fullWidth required>
                                     <InputLabel>Password</InputLabel>
-                                    <Input {...field.input} type="string" placeholder="password"/>
+                                    <Input {...field.input} type="password" placeholder="password"/>
                                 </FormControl>
                             )}/>
                         </Grid>
