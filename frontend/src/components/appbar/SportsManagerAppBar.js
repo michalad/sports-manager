@@ -14,6 +14,7 @@ import Button from 'material-ui/Button';
 import {Link} from 'react-router-dom';
 
 import {logout} from '../login/loginActions'
+import Notifications from "../notifications/Notifications";
 
 const styles = {
     root: {
@@ -58,6 +59,7 @@ class SportsManagerAppBar extends React.Component {
                         {button}
                     </Toolbar>
                 </AppBar>
+                <Notifications/>
             </div>
         );
     }
@@ -75,9 +77,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 SportsManagerAppBar = withStyles(styles)(SportsManagerAppBar);
-
-/*LoginForm = reduxForm({
-    form: 'LoginForm'
-})(LoginForm);*/
 
 export default connect(mapStateToProps, mapDispatchToProps)(SportsManagerAppBar);

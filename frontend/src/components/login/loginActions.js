@@ -26,9 +26,9 @@ const login = (loginData) => (dispatch) => {
                     });
                 } else {
                     dispatch({
-                        type: 'LOGIN_FAILED',
-                        user: {
-                            isAuthenticated: false,
+                        type: 'SHOW_NOTIFICATION',
+                        notification: {
+                            show: true,
                             message: user.message
                         }
                     });

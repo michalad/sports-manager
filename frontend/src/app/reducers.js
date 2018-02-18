@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form'
 import loginReducers from '../components/login/loginReducers';
+import notificationReducers from '../components/notifications/notificationsReducers';
 
 
 const reducer = function (prevState = [], action) {
@@ -60,5 +61,6 @@ export default combineReducers({
     matches: matchesReducers,
     standings: standingsReducer,
     teams: teamsReducers,
-    auth: loginReducers
+    auth: loginReducers,
+    notification: notificationReducers
 });

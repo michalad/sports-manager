@@ -6,7 +6,7 @@ const PassportLocalStrategy = require('passport-local').Strategy;
 function login(req, res, next) {
     return passport.authenticate('local-login', (err, token, userData) => {
         if (err) {
-            if (err.name === 'IncorrectCredentialsError') {
+            if (err.name === 'IncorrectCredentialsError' || err.name === 'AccountInactiveError') {
                 return res.status(200).json({
                     success: false,
                     message: err.message
@@ -19,6 +19,12 @@ function login(req, res, next) {
             });
         }
 
+        if(!token) {
+            return res.status(400).json({
+                success: false,
+                message: 'Could not process the form.'
+            });
+        }
 
         return res.json({
             success: true,
@@ -53,9 +59,7 @@ passport.use('local-login', new PassportLocalStrategy({
             return done(error);
         }
 
-        // TODO check is active
 
-        // check if a hashed user's password is equal to a value saved in the database
         return user.comparePassword(userData.password, (passwordErr, isMatch) => {
             if (err) {
                 return done(err);
@@ -64,6 +68,13 @@ passport.use('local-login', new PassportLocalStrategy({
             if (!isMatch) {
                 const error = new Error('Incorrect email or password');
                 error.name = 'IncorrectCredentialsError';
+
+                return done(error);
+            }
+
+            if (!user.isActive) {
+                const error = new Error('Your account is inactive, please contact administrator');
+                error.name = 'AccountInactiveError';
 
                 return done(error);
             }

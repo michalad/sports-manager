@@ -32,7 +32,7 @@ class LoginForm extends React.Component {
                     <Grid container spacing={24} direction="column">
                         <Grid item>
                             <Field name="username" component={(field) => (
-                                <FormControl fullWidth>
+                                <FormControl fullWidth required>
                                     <InputLabel>Login</InputLabel>
                                     <Input {...field.input} type="string" placeholder="login"/>
                                 </FormControl>
@@ -40,7 +40,7 @@ class LoginForm extends React.Component {
                         </Grid>
                         <Grid item>
                             <Field name="password" component={(field) => (
-                                <FormControl fullWidth>
+                                <FormControl fullWidth required>
                                     <InputLabel>Password</InputLabel>
                                     <Input {...field.input} type="string" placeholder="password"/>
                                 </FormControl>

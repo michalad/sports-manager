@@ -1,7 +1,6 @@
 class TokenStorage {
 
     static authenticateUser(user) {
-        console.log('DEBUG: ' + user);
         localStorage.setItem('token', user.token);
         localStorage.setItem('username', user.username);
     }
@@ -13,10 +12,6 @@ class TokenStorage {
     static logoutUser() {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
-    }
-
-    static getToken() {
-        return localStorage.getItem('token');
     }
 
     static authHeader() {

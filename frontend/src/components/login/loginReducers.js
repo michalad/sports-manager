@@ -13,9 +13,7 @@ const loginReducers = (prevState = {
             return {user: action.user};
         }
         case 'LOGOUT':
-            return Object.assign({}, prevState, {
-                user: action.user
-            });
+            return {user: action.user};
         default: {
             return prevState;
         }
