@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form'
+import loginReducers from '../components/login/loginReducers';
 
 
 const reducer = function (prevState = [], action) {
@@ -9,7 +10,7 @@ const reducer = function (prevState = [], action) {
         case 'NEW_SPORT_EVENT_SAVED':
             return [...prevState, action.sportEvent];
         default:
-            return [];
+            return [...prevState];
 
     }
 };
@@ -59,4 +60,5 @@ export default combineReducers({
     matches: matchesReducers,
     standings: standingsReducer,
     teams: teamsReducers,
+    auth: loginReducers
 });

@@ -7,7 +7,7 @@ function login(req, res, next) {
     return passport.authenticate('local-login', (err, token, userData) => {
         if (err) {
             if (err.name === 'IncorrectCredentialsError') {
-                return res.status(400).json({
+                return res.status(200).json({
                     success: false,
                     message: err.message
                 });
@@ -24,7 +24,7 @@ function login(req, res, next) {
             success: true,
             message: 'You have successfully logged in!',
             token,
-            user: userData
+            username: userData.username
         });
     })(req, res, next);
 }
@@ -76,7 +76,7 @@ passport.use('local-login', new PassportLocalStrategy({
             // TODO externalise secret !!!!
             const token = jwt.sign(payload, 'SECRET');
             const data = {
-                name: user.name
+                username: user.username
             };
 
             return done(null, token, data);

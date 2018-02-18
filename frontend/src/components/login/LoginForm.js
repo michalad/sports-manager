@@ -9,6 +9,7 @@ import Button from 'material-ui/Button';
 import {withStyles} from 'material-ui/styles';
 import Input, {InputLabel} from 'material-ui/Input';
 import Grid from "material-ui/es/Grid/Grid";
+import { Redirect } from 'react-router'
 
 const styles = theme => ({
     container: {
@@ -23,38 +24,45 @@ const styles = theme => ({
 class LoginForm extends React.Component {
 
     render() {
-        const {handleSubmit, classes} = this.props;
+        const {handleSubmit, classes, auth} = this.props;
 
         return (
-            <form onSubmit={handleSubmit} className={classes.container}>
-                <Grid container spacing={24} direction="column">
-                    <Grid item>
-                        <Field name="username" component={(field) => (
-                            <FormControl fullWidth>
-                                <InputLabel>Login</InputLabel>
-                                <Input {...field.input} type="string" placeholder="login"/>
-                            </FormControl>
-                        )}/>
+            <div>
+                <form onSubmit={handleSubmit} className={classes.container}>
+                    <Grid container spacing={24} direction="column">
+                        <Grid item>
+                            <Field name="username" component={(field) => (
+                                <FormControl fullWidth>
+                                    <InputLabel>Login</InputLabel>
+                                    <Input {...field.input} type="string" placeholder="login"/>
+                                </FormControl>
+                            )}/>
+                        </Grid>
+                        <Grid item>
+                            <Field name="password" component={(field) => (
+                                <FormControl fullWidth>
+                                    <InputLabel>Password</InputLabel>
+                                    <Input {...field.input} type="string" placeholder="password"/>
+                                </FormControl>
+                            )}/>
+                        </Grid>
+                        <Grid item>
+                            <Button type="submit" raised color="primary">Login</Button>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Field name="password" component={(field) => (
-                            <FormControl fullWidth>
-                                <InputLabel>Password</InputLabel>
-                                <Input {...field.input} type="string" placeholder="password"/>
-                            </FormControl>
-                        )}/>
-                    </Grid>
-                    <Grid item>
-                        <Button type="submit" raised color="primary">Login</Button>
-                    </Grid>
-                </Grid>
-            </form>
+                </form>
+                {auth.user.isAuthenticated && (
+                    <Redirect to={'/'}/>
+                )}
+            </div>
         );
     }
 
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    auth: state.auth
+});
 
 const mapDispatchToProps = {
     onSubmit: login

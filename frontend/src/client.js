@@ -1,19 +1,14 @@
 "use strict"
 import React from 'react';
 import {render} from 'react-dom';
-import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom'
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
 import {Provider} from 'react-redux';
 import crateReduxStore from './app/createStore';
 
 import SportEventsPage from './components/pages/sportEventsPage';
 import SportEventDetailsPage from './components/pages/sportEventDetailsPage';
 import LoginPage from "./components/login/LoginPage";
-
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
+import SportsManagerAppBar from "./components/appbar/SportsManagerAppBar";
 
 const store = crateReduxStore();
 
@@ -21,16 +16,7 @@ const store = crateReduxStore();
 const PrimaryLayout = () => (
     <div className="primary-layout">
         <header>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton  color="inherit" aria-label="Menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography type="title" color="inherit" >
-                        Sports manager
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <SportsManagerAppBar />
         </header>
         <main>
             <Switch>
