@@ -1,3 +1,5 @@
+import TokenStorage from "../auth/TokenStorage";
+
 const loadSportEvents = () => (dispatch) => {
     return fetch('/api/sport-events')
         .then((response) => {
@@ -32,7 +34,14 @@ const loadStandings = (id) => (dispatch) => {
 };
 
 const createNewEvent = (newSportEvent) => (dispatch) => {
-    return fetch('/api/sport-events', {method: 'POST', headers: {'content-type': 'application/json'}, body: JSON.stringify(newSportEvent),})
+    return fetch('/api/sport-events', {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': TokenStorage.authHeader()
+        },
+        body: JSON.stringify(newSportEvent),
+    })
         .then((response) => {
             if (!response.ok) {
                 throw Error(response.statusText);
@@ -82,7 +91,10 @@ const loadTeams = (sportEventId) => (dispatch) => {
 const addMatchResult = (newMatchResult) => (dispatch) => {
     return fetch(`/api/sport-events/${newMatchResult.sportEventId}/matches`, {
         method: 'POST',
-        headers: {'content-type': 'application/json'},
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': TokenStorage.authHeader()
+        },
         body: JSON.stringify({
             teamA: {
                 name: newMatchResult.teamAName,
@@ -105,7 +117,7 @@ const addMatchResult = (newMatchResult) => (dispatch) => {
                     type: 'NEW_MATCH_RESULT_SAVED',
                     matchResult
                 });
-            dispatch(loadStandings(newMatchResult.sportEventId));
+                dispatch(loadStandings(newMatchResult.sportEventId));
             }
         );
 };
@@ -113,7 +125,10 @@ const addMatchResult = (newMatchResult) => (dispatch) => {
 const addTeam = (newTeam) => (dispatch) => {
     return fetch(`/api/sport-events/${newTeam.sportEventId}/teams`, {
         method: 'POST',
-        headers: {'content-type': 'application/json'},
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': TokenStorage.authHeader()
+        },
         body: JSON.stringify({
             name: newTeam.name
         },),

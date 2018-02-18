@@ -61,7 +61,7 @@ class SportEventsPage extends React.Component {
 
     render() {
         const {
-            sportEvents
+            sportEvents, auth
         } = this.props;
         console.log('....', this.props);
         console.log(sportEvents);
@@ -90,7 +90,7 @@ class SportEventsPage extends React.Component {
                                     />
                                 </FormControl>
                                 <FormControl margin='normal'>
-                                    <Button type="submit" raised color="primary">
+                                    <Button type="submit" raised color="primary" disabled={!auth.user.isAuthenticated}>
                                         Add
                                     </Button>
                                 </FormControl>
@@ -141,6 +141,7 @@ const EventsTable = ({sportEvents}) => (
 const mapStateToProps = state => {
     return {
         sportEvents: state.sportEvents,
+        auth: state.auth,
     }
 };
 

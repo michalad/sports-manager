@@ -32,7 +32,7 @@ class AddMatchResultForm extends React.Component {
     }
 
     render() {
-        const {handleSubmit, sportEventId, teams, classes} = this.props;
+        const {handleSubmit, sportEventId, teams, classes, auth} = this.props;
 
         return (
             <form onSubmit={handleSubmit} className={classes.container} inline>
@@ -45,7 +45,7 @@ class AddMatchResultForm extends React.Component {
                     <input {...field.input} type="hidden"/>
                 )}/>
                 <FormControl margin='normal'>
-                    <Button type="submit" raised color="primary">Add</Button>
+                    <Button type="submit" raised color="primary" disabled={!auth.user.isAuthenticated}>Add</Button>
                 </FormControl>
             </form>
         );
@@ -86,7 +86,8 @@ const ResultField = ({name, label, placeholder, classes}) => (
 );
 
 const mapStateToProps = state => ({
-    teams: state.teams
+    teams: state.teams,
+    auth: state.auth
 });
 
 const mapDispatchToProps = {

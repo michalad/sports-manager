@@ -6,7 +6,7 @@ import Button from 'material-ui/Button';
 import {addTeam} from "../../app/actions"
 
 let AddTeamForm = ({...props}) => {
-    const {handleSubmit, sportEventId} = props;
+    const {handleSubmit, sportEventId, auth} = props;
     props.change('sportEventId', sportEventId);
     return (<form onSubmit={handleSubmit} inline>
         <Field name='name' component={(field) => {
@@ -15,11 +15,13 @@ let AddTeamForm = ({...props}) => {
         <Field name="sportEventId" component={(field) => (
             <input {...field.input} type="hidden"/>
         )}/>
-        <Button type="submit">Add</Button>
+        <Button type="submit" disabled={!auth.user.isAuthenticated}>Add</Button>
     </form>);
 };
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    auth: state.auth
+});
 
 const mapDispatchToProps = {
     onSubmit: addTeam

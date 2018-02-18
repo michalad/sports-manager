@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../../repository/models/user');
 const passport = require('passport');
 const PassportLocalStrategy = require('passport-local').Strategy;
+const config = require('../../config/config');
 
 function login(req, res, next) {
     return passport.authenticate('local-login', (err, token, userData) => {
@@ -83,9 +84,7 @@ passport.use('local-login', new PassportLocalStrategy({
                 sub: user._id
             };
 
-            // create a token string
-            // TODO externalise secret !!!!
-            const token = jwt.sign(payload, 'SECRET');
+            const token = jwt.sign(payload, config.jwtSecret);
             const data = {
                 username: user.username
             };
