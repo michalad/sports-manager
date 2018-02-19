@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node ./server/server.js",
     "build": "webpack --config ./webpack.config.js",
-    "postinstall": "webpack -p --config ./webpack.config.js"
+    "postinstall": "webpack --config ./webpack.prd.config.js"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
