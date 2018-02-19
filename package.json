@@ -1,10 +1,15 @@
 {
   "name": "sports-manager",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": "9.3.0",
+    "npm": "5.6.0"
+  },
   "scripts": {
     "start": "node ./server/server.js",
-    "build": "webpack --config ./webpack.config.js"
+    "build": "webpack --config ./webpack.config.js",
+    "postinstall": "webpack -p --config ./webpack.config.js"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
