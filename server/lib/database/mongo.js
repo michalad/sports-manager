@@ -1,6 +1,7 @@
 console.log('Connecting to db');
+const config = require('../config/config');
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/sports-manager');
+mongoose.connect(config.databaseUrl);
 mongoose.connection.on('error', console.error.bind(console, '# MongoDB - connection error:'));
 
 mongoose.connection.once('open', function () {
