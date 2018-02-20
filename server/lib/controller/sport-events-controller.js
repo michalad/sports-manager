@@ -1,7 +1,6 @@
 const SportsEvents = require('../repository/models/sportsEvents');
 
 function createSportEvent(req, res, next) {
-    console.log('aaa', req.body);
     SportsEvents.create(req.body, function (err, sportEvent) {
         if (err) {
             res.status(400).send({error: err})

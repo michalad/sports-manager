@@ -1,5 +1,7 @@
-var path = require('path');
+const path = require('path');
 const webpack = require('webpack');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
 module.exports = {
     entry: './frontend/src/client.js',
     output: {
@@ -16,18 +18,6 @@ module.exports = {
                 query: {
                     presets: ['react', 'es2015', 'stage-1']
                 }
-            },
-            {
-                test: /\.css$/,
-                loader: 'style-loader'
-            },
-            {
-                test: /\.css$/,
-                loader: 'css-loader',
-                query: {
-                    modules: true,
-                    localIdentName: '[name]__[local]___[hash:base64:5]'
-                }
             }
         ]
     },
@@ -36,6 +26,7 @@ module.exports = {
             'process.env': {
                 'NODE_ENV': JSON.stringify('production')
             }
-        })
+        }),
+        new UglifyJSPlugin()
     ]
-}
+};

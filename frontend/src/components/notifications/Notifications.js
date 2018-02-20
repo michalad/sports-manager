@@ -12,7 +12,6 @@ class Notifications extends React.Component {
 
     render() {
         const {notification} = this.props;
-        console.log('RENDERING notification: ' + JSON.stringify(notification));
         return (
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}

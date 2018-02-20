@@ -63,8 +63,6 @@ class SportEventsPage extends React.Component {
         const {
             sportEvents, auth
         } = this.props;
-        console.log('....', this.props);
-        console.log(sportEvents);
 
         return (
             <div>
