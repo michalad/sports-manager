@@ -8,7 +8,7 @@ import Input, {InputLabel} from 'material-ui/Input';
 import {FormControl} from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import {List, ListItem, ListItemIcon, ListItemText} from "material-ui";
+import {Divider, List, ListItem, ListItemIcon, ListItemText} from "material-ui";
 import InboxIcon from 'material-ui-icons/Event';
 import Moment from "moment/moment";
 import {Link} from "react-router-dom";
@@ -116,17 +116,19 @@ class SportEventsPage extends React.Component {
 }
 
 const EventList = ({sportEvents}) => sportEvents.map(sportEvent => (
-        <ListItem key={sportEvent._id}
-                  component={Link}
-                  to={`/sport-events/${sportEvent._id}`}
-                  button>
+    <div key={sportEvent._id}>
+        <ListItem
+            component={Link}
+            to={`/sport-events/${sportEvent._id}`}
+            button>
             <ListItemIcon>
                 <InboxIcon/>
             </ListItemIcon>
             <ListItemText primary={sportEvent.name} secondary={Moment(sportEvent.date).format('MMMM Do YYYY')}/>
         </ListItem>
-    )
-);
+        <Divider/>
+    </div>))
+;
 
 
 const mapStateToProps = state => {
