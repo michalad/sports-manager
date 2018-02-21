@@ -1,4 +1,5 @@
 import TokenStorage from "../../auth/TokenStorage";
+import {showNotification} from "../notifications/notificationActions";
 
 const login = (loginData) => (dispatch) => {
     return fetch(`/api/login`, {
@@ -25,13 +26,7 @@ const login = (loginData) => (dispatch) => {
                         }
                     });
                 } else {
-                    dispatch({
-                        type: 'SHOW_NOTIFICATION',
-                        notification: {
-                            show: true,
-                            message: user.message
-                        }
-                    });
+                    dispatch(showNotification(user.message));
                 }
             }
         );

@@ -7,11 +7,15 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case 'SHOW_NOTIFICATION': {
-            return action.notification
-
+            return {
+                message: action.message,
+                show: true
+            }
         }
         case 'CLOSE_NOTIFICATION': {
-            return action.notification
+            return {
+                show: false
+            }
 
         }
     }

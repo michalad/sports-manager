@@ -1,20 +1,14 @@
-const showNotification = (message) => (dispatch) => {
-    return dispatch({
+function showNotification(message) {
+    return {
         type: 'SHOW_NOTIFICATION',
-        notification: {
-            show: true,
-            message: message
-        }
-    });
-};
+        message: message
+    }
+}
 
-const closeNotification = () => (dispatch) => {
-    return dispatch({
+function closeNotification() {
+    return {
         type: 'CLOSE_NOTIFICATION',
-        notification: {
-            show: false
-        }
-    });
-};
+    }
+}
 
 export {showNotification, closeNotification};
