@@ -45,7 +45,7 @@ class AddMatchResultForm extends React.Component {
                     <input {...field.input} type="hidden"/>
                 )}/>
                 <FormControl margin='normal'>
-                    <Button type="submit" raised color="primary" disabled={!auth.user.isAuthenticated}>Add</Button>
+                    <Button type="submit" variant="raised" color="primary" disabled={!auth.user.isAuthenticated}>Add</Button>
                 </FormControl>
             </form>
         );

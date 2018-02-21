@@ -88,7 +88,7 @@ class SportEventsPage extends React.Component {
                                     />
                                 </FormControl>
                                 <FormControl margin='normal'>
-                                    <Button type="submit" raised color="primary" disabled={!auth.user.isAuthenticated}>
+                                    <Button type="submit" variant="raised" color="primary" disabled={!auth.user.isAuthenticated}>
                                         Add
                                     </Button>
                                 </FormControl>

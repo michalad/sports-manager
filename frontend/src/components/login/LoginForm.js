@@ -47,7 +47,7 @@ class LoginForm extends React.Component {
                             )}/>
                         </Grid>
                         <Grid item>
-                            <Button type="submit" raised color="primary">Login</Button>
+                            <Button type="submit" variant="raised" color="primary">Login</Button>
                         </Grid>
                     </Grid>
                 </form>
