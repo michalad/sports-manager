@@ -1,16 +1,17 @@
-"use strict"
+"use strict";
 import React from "react";
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import {connect} from "react-redux";
-import {Link} from 'react-router-dom';
-import {loadSportEvents, createNewEvent} from '../../app/actions';
+import {createNewEvent, loadSportEvents} from './sportsEventsActions';
 import Input, {InputLabel} from 'material-ui/Input';
 import {FormControl} from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Moment from 'moment';
+import {List, ListItem, ListItemIcon, ListItemText} from "material-ui";
+import InboxIcon from 'material-ui-icons/Event';
+import Moment from "moment/moment";
+import {Link} from "react-router-dom";
 
 
 const card = {
@@ -70,7 +71,7 @@ class SportEventsPage extends React.Component {
                     <Grid item xs>
                         <Paper style={card}>
                             <form onSubmit={this.handleSubmit}>
-                                <FormControl fullWidth>
+                                <FormControl fullWidth required>
                                     <InputLabel htmlFor="event-name">Event name</InputLabel>
                                     <Input id="event-name" value={this.state.value}
                                            onChange={this.handleChange}/>
@@ -80,6 +81,7 @@ class SportEventsPage extends React.Component {
                                         id="date"
                                         label="Event date"
                                         type="date"
+                                        required
                                         value={this.state.date}
                                         onChange={this.handleChangeDate}
                                         InputLabelProps={{
@@ -88,7 +90,8 @@ class SportEventsPage extends React.Component {
                                     />
                                 </FormControl>
                                 <FormControl margin='normal'>
-                                    <Button type="submit" variant="raised" color="primary" disabled={!auth.user.isAuthenticated}>
+                                    <Button type="submit" variant="raised" color="primary"
+                                            disabled={!auth.user.isAuthenticated}>
                                         Add
                                     </Button>
                                 </FormControl>
@@ -99,7 +102,11 @@ class SportEventsPage extends React.Component {
                 <Grid container spacing={24}>
                     <Grid item xs>
                         <Paper style={card}>
-                            <EventsTable sportEvents={sportEvents}/>
+                            <div>
+                                <List component="nav">
+                                    <EventList sportEvents={sportEvents}/>
+                                </List>
+                            </div>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -108,33 +115,19 @@ class SportEventsPage extends React.Component {
     }
 }
 
-
-const EventRows = ({sportEvents}) => sportEvents.map(sportEvent => (
-        <EventRow key={sportEvent._id} sportEvent={sportEvent}/>
+const EventList = ({sportEvents}) => sportEvents.map(sportEvent => (
+        <ListItem key={sportEvent._id}
+                  component={Link}
+                  to={`/sport-events/${sportEvent._id}`}
+                  button>
+            <ListItemIcon>
+                <InboxIcon/>
+            </ListItemIcon>
+            <ListItemText primary={sportEvent.name} secondary={Moment(sportEvent.date).format('MMMM Do YYYY')}/>
+        </ListItem>
     )
 );
 
-const EventRow = ({sportEvent}) => (
-    <TableRow key={sportEvent.id}>
-        <TableCell><Link to={`/sport-events/${sportEvent._id}`}>{Moment(sportEvent.date).format('MMMM Do YYYY')}</Link></TableCell>
-        <TableCell><Link to={`/sport-events/${sportEvent._id}`}>{sportEvent.name}</Link></TableCell>
-    </TableRow>
-);
-
-const EventsTable = ({sportEvents}) => (
-    <Table >
-        <TableHead>
-            <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Name</TableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            <EventRows sportEvents={sportEvents}/>
-        </TableBody>
-    </Table>
-
-);
 
 const mapStateToProps = state => {
     return {

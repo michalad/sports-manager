@@ -5,7 +5,7 @@ import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom'
 import {Provider} from 'react-redux';
 import crateReduxStore from './app/createStore';
 
-import SportEventsPage from './components/pages/sportEventsPage';
+import SportEventsPage from './components/sportsevents/SportsEventsPage';
 import SportEventDetailsPage from './components/pages/sportEventDetailsPage';
 import LoginPage from "./components/login/LoginPage";
 import SportsManagerAppBar from "./components/appbar/SportsManagerAppBar";

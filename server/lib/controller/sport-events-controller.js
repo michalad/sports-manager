@@ -15,7 +15,11 @@ function getAllSportEvents(req, res, next) {
         if (err) {
             res.status(400).send({error: err})
         } else {
-            res.json(sportEvents);
+            let sortedEvents = sportEvents.sort(function(a,b){
+                return new Date(b.date) - new Date(a.date);
+            });
+
+            res.json(sortedEvents);
         }
     })
 }

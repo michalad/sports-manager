@@ -1,21 +1,5 @@
 import TokenStorage from "../auth/TokenStorage";
 
-const loadSportEvents = () => (dispatch) => {
-    return fetch('/api/sport-events')
-        .then((response) => {
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response.json();
-        })
-        .then((sportEvents) =>
-            dispatch({
-                type: 'SPORT_EVENTS_LOADED',
-                sportEvents
-            })
-        );
-};
-
 const loadStandings = (id) => (dispatch) => {
     return fetch(`/api/sport-events/${id}/table`)
         .then((response) => {
@@ -30,29 +14,6 @@ const loadStandings = (id) => (dispatch) => {
                     standings
                 })
             }
-        );
-};
-
-const createNewEvent = (newSportEvent) => (dispatch) => {
-    return fetch('/api/sport-events', {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': TokenStorage.authHeader()
-        },
-        body: JSON.stringify(newSportEvent),
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response.json();
-        })
-        .then((sportEvent) =>
-            dispatch({
-                type: 'NEW_SPORT_EVENT_SAVED',
-                sportEvent
-            })
         );
 };
 
@@ -148,5 +109,5 @@ const addTeam = (newTeam) => (dispatch) => {
         );
 };
 
-export {loadSportEvents, createNewEvent, loadMatches, addMatchResult, loadStandings, addTeam, loadTeams};
+export {loadMatches, addMatchResult, loadStandings, addTeam, loadTeams};
 
