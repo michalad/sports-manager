@@ -110,14 +110,14 @@ const StandingsTable = ({standings}) => (
         <TableHead>
             <TableRow>
                 <TableCell>Team</TableCell>
-                <TableCell>Played</TableCell>
-                <TableCell>Won</TableCell>
+                <TableCell padding="dense">Played</TableCell>
+                <TableCell padding="dense">Won</TableCell>
                 <Hidden only={['xs', 'sm']}>
-                    <TableCell>Draw</TableCell>
-                    <TableCell>Loss</TableCell>
-                    <TableCell>Goals for</TableCell>
-                    <TableCell>Goals against</TableCell>
-                    <TableCell>Goals difference</TableCell>
+                    <TableCell padding="dense">Draw</TableCell>
+                    <TableCell padding="dense">Loss</TableCell>
+                    <TableCell padding="dense">Goals for</TableCell>
+                    <TableCell padding="dense">Goals against</TableCell>
+                    <TableCell padding="dense">Goals difference</TableCell>
                 </Hidden>
                 <TableCell>Points</TableCell>
             </TableRow>
@@ -144,14 +144,14 @@ const StandingsRows = ({standings}) => (
     standings.map(standing => (
         <TableRow>
             <TableCell>{standing.team}</TableCell>
-            <TableCell>{standing.played}</TableCell>
-            <TableCell>{standing.won}</TableCell>
+            <TableCell padding="dense">{standing.played}</TableCell>
+            <TableCell padding="dense">{standing.won}</TableCell>
             <Hidden only={['xs', 'sm']}>
-                <TableCell>{standing.draw}</TableCell>
-                <TableCell>{standing.loss}</TableCell>
-                <TableCell>{standing.goalsFor}</TableCell>
-                <TableCell>{standing.goalsAgainst}</TableCell>
-                <TableCell>{standing.goalDifference}</TableCell>
+                <TableCell padding="dense">{standing.draw}</TableCell>
+                <TableCell padding="dense">{standing.loss}</TableCell>
+                <TableCell padding="dense">{standing.goalsFor}</TableCell>
+                <TableCell padding="dense">{standing.goalsAgainst}</TableCell>
+                <TableCell padding="dense">{standing.goalDifference}</TableCell>
             </Hidden>
             <TableCell><b>{standing.points}</b></TableCell>
 
