@@ -9,14 +9,30 @@ import {loadMatches, loadStandings, loadTeams} from '../../app/actions';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import {withStyles} from 'material-ui/styles';
+import {Button, Dialog, Hidden, Slide} from "material-ui";
+import AddIcon from 'material-ui-icons/Add';
 
 const styles = theme => ({
     grid: {
         marginTop: '10px'
-    }
+    },
+    fab: {
+        position: 'fixed',
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 2,
+    },
 });
 
+function Transition(props) {
+    return <Slide direction="up" {...props} />;
+}
+
 class SportEventDetailsPage extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {open: false};
+    }
 
     componentDidMount() {
         this.props.loadMatches(this.props.match.params.id);
@@ -24,10 +40,18 @@ class SportEventDetailsPage extends React.Component {
         this.props.loadTeams(this.props.match.params.id);
     }
 
+    handleClickOpen = () => {
+        this.setState({open: true});
+    };
+
+    handleClose = () => {
+        this.setState({open: false});
+    };
+
     render() {
 
         const {
-            matches, teams, match, classes
+            matches, teams, match, classes, auth
         } = this.props;
 
         return (
@@ -35,20 +59,15 @@ class SportEventDetailsPage extends React.Component {
                 <Grid className={classes.grid} container spacing={24}>
                     <Grid item xs={12} sm={6}>
                         <Paper>
-                            <Typography color="primary" >
+                            <Typography color="primary">
                                 Matches
                             </Typography>
                             <MatchesTable matches={this.props.matches}/>
                         </Paper>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Paper>
-                            <AddMatchResultForm sportEventId={match.params.id} teams={teams}/>
-                        </Paper>
-                    </Grid>
                     <Grid item xs={12}>
                         <Paper>
-                            <Typography color="primary" >
+                            <Typography color="primary">
                                 Standings
                             </Typography>
                             <StandingsTable standings={this.props.standings}/>
@@ -60,6 +79,19 @@ class SportEventDetailsPage extends React.Component {
                         </Paper>
                     </Grid>
                 </Grid>
+                <Button variant="fab"
+                        onClick={this.handleClickOpen}
+                        className={classes.fab}
+                        color="primary"
+                        disabled={!auth.user.isAuthenticated}>
+                    <AddIcon/>
+                </Button>
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    transition={Transition}>
+                    <AddMatchResultForm sportEventId={match.params.id} teams={teams}/>
+                </Dialog>
             </div>
         );
     }
@@ -80,11 +112,13 @@ const StandingsTable = ({standings}) => (
                 <TableCell>Team</TableCell>
                 <TableCell>Played</TableCell>
                 <TableCell>Won</TableCell>
-                <TableCell>Draw</TableCell>
-                <TableCell>Loss</TableCell>
-                <TableCell>Goals for</TableCell>
-                <TableCell>Goals against</TableCell>
-                <TableCell>Goals difference</TableCell>
+                <Hidden only={['xs', 'sm']}>
+                    <TableCell>Draw</TableCell>
+                    <TableCell>Loss</TableCell>
+                    <TableCell>Goals for</TableCell>
+                    <TableCell>Goals against</TableCell>
+                    <TableCell>Goals difference</TableCell>
+                </Hidden>
                 <TableCell>Points</TableCell>
             </TableRow>
         </TableHead>
@@ -112,11 +146,13 @@ const StandingsRows = ({standings}) => (
             <TableCell>{standing.team}</TableCell>
             <TableCell>{standing.played}</TableCell>
             <TableCell>{standing.won}</TableCell>
-            <TableCell>{standing.draw}</TableCell>
-            <TableCell>{standing.loss}</TableCell>
-            <TableCell>{standing.goalsFor}</TableCell>
-            <TableCell>{standing.goalsAgainst}</TableCell>
-            <TableCell>{standing.goalDifference}</TableCell>
+            <Hidden only={['xs', 'sm']}>
+                <TableCell>{standing.draw}</TableCell>
+                <TableCell>{standing.loss}</TableCell>
+                <TableCell>{standing.goalsFor}</TableCell>
+                <TableCell>{standing.goalsAgainst}</TableCell>
+                <TableCell>{standing.goalDifference}</TableCell>
+            </Hidden>
             <TableCell><b>{standing.points}</b></TableCell>
 
         </TableRow>
@@ -127,7 +163,8 @@ const StandingsRows = ({standings}) => (
 const mapStateToProps = state => {
     return {
         matches: state.matches,
-        standings: state.standings
+        standings: state.standings,
+        auth: state.auth
     }
 };
 
