@@ -1,26 +1,9 @@
-const path = require('path');
 const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const merge = require('webpack-merge');
+const commonCfg = require('./webpack.common.config.js');
 
-module.exports = {
-    entry: './frontend/src/client.js',
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'public')
-    },
-    watch: false,
-    module: {
-        loaders: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-1']
-                }
-            }
-        ]
-    },
+module.exports = merge(commonCfg, {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
@@ -29,4 +12,4 @@ module.exports = {
         }),
         new UglifyJSPlugin()
     ]
-};
+});

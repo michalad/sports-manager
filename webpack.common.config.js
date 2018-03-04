@@ -1,12 +1,22 @@
 var path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
+
 module.exports = {
-    entry: './frontend/src/client.js',
+    context: path.resolve(__dirname, './frontend/src'),
+    entry: './client.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public')
     },
-    watch: true,
+    plugins: [
+        new CleanWebpackPlugin(['public']),
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            inject: true,
+        }),
+    ],
     module: {
         loaders: [
             {
@@ -16,19 +26,7 @@ module.exports = {
                 query: {
                     presets: ['react', 'es2015', 'stage-1']
                 }
-            },
-            {
-                test: /\.css$/,
-                loader: 'style-loader'
-            },
-            {
-                test: /\.css$/,
-                loader: 'css-loader',
-                query: {
-                    modules: true,
-                    localIdentName: '[name]__[local]___[hash:base64:5]'
-                }
             }
         ]
     }
-}
+};

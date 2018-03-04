@@ -1,6 +1,6 @@
 {
   "name": "sports-manager",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "private": true,
   "engines": {
     "node": "9.3.0",
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node ./server/server.js",
-    "build": "webpack --config ./webpack.config.js",
+    "build": "webpack --config ./webpack.dev.config.js",
     "postinstall": "webpack --config ./webpack.prd.config.js"
   },
   "dependencies": {
@@ -43,7 +43,9 @@
     "uglifyjs-webpack-plugin": "^1.2.0"
   },
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.18",
     "html-webpack-plugin": "^2.30.1",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "webpack-merge": "^4.1.2"
   }
 }
