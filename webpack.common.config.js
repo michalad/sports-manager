@@ -8,6 +8,7 @@ module.exports = {
     entry: './client.js',
     output: {
         filename: 'bundle.js',
+        publicPath: '/',
         path: path.resolve(__dirname, 'public')
     },
     plugins: [
