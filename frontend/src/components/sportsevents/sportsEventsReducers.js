@@ -3,7 +3,7 @@ const reducer = function (prevState = [], action) {
         case 'SPORT_EVENTS_LOADED':
             return action.sportEvents;
         case 'NEW_SPORT_EVENT_SAVED':
-            return [...prevState, action.sportEvent];
+            return [action.sportEvent, ...prevState];
         default:
             return [...prevState];
 
