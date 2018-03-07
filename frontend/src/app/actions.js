@@ -1,4 +1,5 @@
 import TokenStorage from "../auth/TokenStorage";
+import {showNotification} from "../components/notifications/notificationActions";
 
 const loadStandings = (id) => (dispatch) => {
     return fetch(`/api/sport-events/${id}/table`)
@@ -79,6 +80,7 @@ const addMatchResult = (newMatchResult) => (dispatch) => {
                     matchResult
                 });
                 dispatch(loadStandings(newMatchResult.sportEventId));
+                dispatch(showNotification(`Match result has been added.`));
             }
         );
 };
@@ -105,6 +107,7 @@ const addTeam = (newTeam) => (dispatch) => {
                     type: 'NEW_TEAM_SAVED',
                     team
                 });
+                dispatch(showNotification(`Team: ${team.name} has been added`));
             }
         );
 };
