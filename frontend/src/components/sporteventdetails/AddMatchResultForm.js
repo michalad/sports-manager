@@ -3,30 +3,21 @@ import React from "react";
 import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
 import {addMatchResult} from "../../app/actions"
-import {InputLabel} from 'material-ui/Input';
+import Input, {InputLabel} from 'material-ui/Input';
+import Select from 'material-ui/Select';
+import {MenuItem} from 'material-ui/Menu';
 import {FormControl} from 'material-ui/Form';
 import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
-import {withStyles} from 'material-ui/styles';
-import Tabs from "material-ui/es/Tabs/Tabs";
-import Tab from "material-ui/es/Tabs/Tab";
+import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
-        minWidth: '300px'
-    },
-    button: {
-        margin: theme.spacing.unit
     },
     formControl: {
         margin: theme.spacing.unit,
-        width: '90%'
-    },
-    formControlResult: {
-        margin: theme.spacing.unit,
-        width: '100px'
+        minWidth: 80,
     },
     selectEmpty: {
         marginTop: theme.spacing.unit * 2,
@@ -38,37 +29,24 @@ class AddMatchResultForm extends React.Component {
     componentDidMount() {
         const {sportEventId} = this.props;
         this.props.change('sportEventId', sportEventId);
-        this.props.change('teamAResult', 0);
-        this.props.change('teamBResult', 0);
     }
 
     render() {
-        const {handleSubmit, teams, classes, auth} = this.props;
+        const {handleSubmit, sportEventId, teams, classes, auth} = this.props;
 
         return (
             <form onSubmit={handleSubmit} className={classes.container} inline>
-                <Grid container direction='column' spacing={0}>
-                    <Grid item>
-                        <TeamSelect name='teamAName' label='Team A' teams={teams} classes={classes}/>
-                    </Grid>
-                    <Grid item>
-                        <ResultField name='teamAResult' label="Result A" placeholder="Result" classes={classes}/>
-                    </Grid>
-                    <Grid item>
-                        <ResultField name='teamBResult' label="Result B" placeholder="Result" classes={classes}/>
-                    </Grid>
-                    <Grid item>
-                        <TeamSelect name='teamBName' label='Team B' teams={teams} classes={classes}/>
-                    </Grid>
-                    <Field name="sportEventId" component={(field) => (
-                        <input {...field.input} type="hidden"/>
-                    )}/>
-                    <Grid item>
-                        <FormControl margin='normal'>
-                            <Button type="submit" variant="raised" color="primary" disabled={!auth.user.isAuthenticated}>Add</Button>
-                        </FormControl>
-                    </Grid>
-                </Grid>
+
+                <TeamSelect name='teamAName' label='Team' teams={teams} classes={classes}/>
+                <ResultField name='teamAResult' label="Result" placeholder="Result" classes={classes}/>
+                <ResultField name='teamBResult' label="Result" placeholder="Result" classes={classes}/>
+                <TeamSelect name='teamBName' label='Team' teams={teams} classes={classes}/>
+                <Field name="sportEventId" component={(field) => (
+                    <input {...field.input} type="hidden"/>
+                )}/>
+                <FormControl margin='normal'>
+                    <Button type="submit" variant="raised" color="primary" disabled={!auth.user.isAuthenticated}>Add</Button>
+                </FormControl>
             </form>
         );
     }
@@ -78,46 +56,31 @@ const TeamSelect = ({name, label, teams, classes}) => (
     <Field name={name}
            component={(field) => (
                <FormControl className={classes.formControl}>
-                   <InputLabel shrink="true" forHtml={field.input.name}>{label}</InputLabel>
-                   <Tabs
+                   <InputLabel forHtml={field.input.name}>{label}</InputLabel>
+                   <Select
                        value={field.input.value}
-                       onChange={(event, value) => {
-                           field.input.onChange(value)
+                       onChange={field.input.onChange}
+                       inputProps={{
+                           name: field.input.name
                        }}
-                       indicatorColor="primary"
-                       textColor="primary"
-                       centered
-                       scrollable
-                       scrollButtons="auto"
+                       children={field.children}
                    >
-                       {teams.map((team) => (
-                           <Tab value={team.name} label={team.name}/>
-                       ))}
-                   </Tabs>
+
+                   </Select>
                </FormControl>
            )
            }>
+        {teams.map((team) => (
+            <MenuItem value={team.name} key={team.name}>{team.name}</MenuItem>
+        ))}
     </Field>
 );
 
 const ResultField = ({name, label, placeholder, classes}) => (
     <Field name={name} component={(field) => (
         <FormControl className={classes.formControl}>
-            <InputLabel shrink="true" forHtml={field.input.name}>{label}</InputLabel>
-            <Tabs
-                value={field.input.value}
-                onChange={(event, value) => {
-                    field.input.onChange(value)
-                }}
-                indicatorColor="primary"
-                textColor="primary"
-                scrollable
-                scrollButtons="auto"
-            >
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((score) => (
-                    <Tab value={score} label={score}/>
-                ))}
-            </Tabs>
+            <InputLabel forHtml={field.input.name}>{label}</InputLabel>
+            <Input {...field.input} type="number" placeholder={placeholder}/>
         </FormControl>
     )}/>
 );
