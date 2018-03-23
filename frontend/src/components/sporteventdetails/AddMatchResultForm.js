@@ -1,15 +1,14 @@
 "use strict";
-import React from "react";
+import React, {Fragment} from "react";
 import {connect} from "react-redux";
 import {Field, reduxForm} from "redux-form";
 import {addMatchResult} from "../../app/actions"
-import {InputLabel} from 'material-ui/Input';
 import {FormControl} from 'material-ui/Form';
 import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
 import {withStyles} from 'material-ui/styles';
 import Tabs from "material-ui/es/Tabs/Tabs";
 import Tab from "material-ui/es/Tabs/Tab";
+import {DialogContent, DialogContentText, DialogTitle} from "material-ui";
 
 const styles = theme => ({
     container: {
@@ -46,39 +45,34 @@ class AddMatchResultForm extends React.Component {
         const {handleSubmit, teams, classes, auth} = this.props;
 
         return (
-            <form onSubmit={handleSubmit} className={classes.container} inline>
-                <Grid container direction='column' spacing={0}>
-                    <Grid item>
-                        <TeamSelect name='teamAName' label='Team A' teams={teams} classes={classes}/>
-                    </Grid>
-                    <Grid item>
-                        <ResultField name='teamAResult' label="Result A" placeholder="Result" classes={classes}/>
-                    </Grid>
-                    <Grid item>
-                        <ResultField name='teamBResult' label="Result B" placeholder="Result" classes={classes}/>
-                    </Grid>
-                    <Grid item>
-                        <TeamSelect name='teamBName' label='Team B' teams={teams} classes={classes}/>
-                    </Grid>
-                    <Field name="sportEventId" component={(field) => (
-                        <input {...field.input} type="hidden"/>
-                    )}/>
-                    <Grid item>
+            <Fragment>
+                <DialogTitle id="form-dialog-title">Add match result</DialogTitle>
+                <DialogContent>
+                    <form onSubmit={handleSubmit} className={classes.container} inline>
+                        <DialogContentText>Team A</DialogContentText>
+                        <TeamSelect name='teamAName' teams={teams} classes={classes}/>
+                        <ResultField name='teamAResult' placeholder="Result" classes={classes}/>
+
+                        <DialogContentText>Team B</DialogContentText>
+                        <TeamSelect name='teamBName' teams={teams} classes={classes}/>
+                        <ResultField name='teamBResult' placeholder="Result" classes={classes}/>
+                        <Field name="sportEventId" component={(field) => (
+                            <input {...field.input} type="hidden"/>
+                        )}/>
                         <FormControl margin='normal'>
                             <Button type="submit" variant="raised" color="primary" disabled={!auth.user.isAuthenticated}>Add</Button>
                         </FormControl>
-                    </Grid>
-                </Grid>
-            </form>
+                    </form>
+                </DialogContent>
+            </Fragment>
         );
     }
 };
 
-const TeamSelect = ({name, label, teams, classes}) => (
+const TeamSelect = ({name, teams, classes}) => (
     <Field name={name}
            component={(field) => (
                <FormControl className={classes.formControl}>
-                   <InputLabel shrink="true" forHtml={field.input.name}>{label}</InputLabel>
                    <Tabs
                        value={field.input.value}
                        onChange={(event, value) => {
@@ -100,10 +94,9 @@ const TeamSelect = ({name, label, teams, classes}) => (
     </Field>
 );
 
-const ResultField = ({name, label, placeholder, classes}) => (
+const ResultField = ({name, placeholder, classes}) => (
     <Field name={name} component={(field) => (
         <FormControl className={classes.formControl}>
-            <InputLabel shrink="true" forHtml={field.input.name}>{label}</InputLabel>
             <Tabs
                 value={field.input.value}
                 onChange={(event, value) => {
