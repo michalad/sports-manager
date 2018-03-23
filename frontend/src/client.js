@@ -10,13 +10,19 @@ import SportEventDetailsPage from './components/sporteventdetails/sportEventDeta
 import LoginPage from "./components/login/LoginPage";
 import SportsManagerAppBar from "./components/appbar/SportsManagerAppBar";
 
+import JssProvider from 'react-jss/lib/JssProvider';
+import { create } from 'jss';
+import { createGenerateClassName, jssPreset } from 'material-ui/styles';
+
 const store = crateReduxStore();
+const generateClassName = createGenerateClassName();
+const jss = create(jssPreset());
 
 // STEP 1 create the store
 const PrimaryLayout = () => (
     <div className="primary-layout">
         <header>
-            <SportsManagerAppBar />
+            <SportsManagerAppBar/>
         </header>
         <main>
             <Switch>
@@ -30,11 +36,13 @@ const PrimaryLayout = () => (
 );
 
 const App = () => (
-    <Provider store={store}>
-        <BrowserRouter>
-            <PrimaryLayout/>
-        </BrowserRouter>
-    </Provider>
+    <JssProvider jss={jss} generateClassName={generateClassName}>
+        <Provider store={store}>
+            <BrowserRouter>
+                <PrimaryLayout/>
+            </BrowserRouter>
+        </Provider>
+    </JssProvider>
 );
 
 render(<App/>, document.getElementById('app'));
