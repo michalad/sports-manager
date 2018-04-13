@@ -1,9 +1,9 @@
 {
   "name": "sports-manager",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "9.3.0",
+    "node": "9.11.1",
     "npm": "5.6.0"
   },
   "scripts": {
