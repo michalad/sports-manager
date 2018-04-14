@@ -3,6 +3,7 @@ import {reducer as formReducer} from 'redux-form'
 import loginReducers from '../components/login/loginReducers';
 import sportsEventsReducers from '../components/sportsevents/sportsEventsReducers'
 import notificationReducers from '../components/notifications/notificationsReducers';
+import matchResultDialogReducers from '../components/matchResultDialog/matchResultDialogReducers';
 
 const matchesReducers = (prevState = [], action) => {
     switch (action.type) {
@@ -50,5 +51,6 @@ export default combineReducers({
     standings: standingsReducer,
     teams: teamsReducers,
     auth: loginReducers,
-    notification: notificationReducers
+    notification: notificationReducers,
+    matchResultDialog: matchResultDialogReducers
 });

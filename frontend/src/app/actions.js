@@ -1,5 +1,6 @@
 import TokenStorage from "../auth/TokenStorage";
 import {showNotification} from "../components/notifications/notificationActions";
+import { closeMatchResultDialog } from '../components/matchResultDialog/matchResultDialogActions'
 
 const loadStandings = (id) => (dispatch) => {
     return fetch(`/api/sport-events/${id}/table`)
@@ -81,6 +82,7 @@ const addMatchResult = (newMatchResult) => (dispatch) => {
                 });
                 dispatch(loadStandings(newMatchResult.sportEventId));
                 dispatch(showNotification(`Match result has been added.`));
+                dispatch(closeMatchResultDialog());
             }
         );
 };

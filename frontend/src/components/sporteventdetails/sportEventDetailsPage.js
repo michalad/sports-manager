@@ -1,15 +1,16 @@
 "use strict";
 import React from "react";
-import {connect} from "react-redux";
-import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
-import AddMatchResultForm from "./AddMatchResultForm";
+import { connect } from "react-redux";
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import MatchResultDialog from "../matchResultDialog/MatchResultDialog";
 import AddTeamForm from './AddTeamForm'
 import Typography from 'material-ui/Typography';
-import {loadMatches, loadStandings, loadTeams} from '../../app/actions';
+import { loadMatches, loadStandings, loadTeams } from '../../app/actions';
+import { openMatchResultDialog } from '../matchResultDialog/matchResultDialogActions'
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
-import {withStyles} from 'material-ui/styles';
-import {Button, Dialog, Hidden, Slide} from "material-ui";
+import { withStyles } from 'material-ui/styles';
+import { Button, Hidden, Slide } from "material-ui";
 import AddIcon from '@material-ui/icons/Add';
 
 const styles = theme => ({
@@ -23,15 +24,10 @@ const styles = theme => ({
     },
 });
 
-function Transition(props) {
-    return <Slide direction="up" {...props} />;
-}
-
 class SportEventDetailsPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {open: false};
     }
 
     componentDidMount() {
@@ -39,14 +35,6 @@ class SportEventDetailsPage extends React.Component {
         this.props.loadStandings(this.props.match.params.id);
         this.props.loadTeams(this.props.match.params.id);
     }
-
-    handleClickOpen = () => {
-        this.setState({open: true});
-    };
-
-    handleClose = () => {
-        this.setState({open: false});
-    };
 
     render() {
 
@@ -62,7 +50,7 @@ class SportEventDetailsPage extends React.Component {
                             <Typography color="primary">
                                 Matches
                             </Typography>
-                            <MatchesTable matches={this.props.matches}/>
+                            <MatchesTable matches={this.props.matches} />
                         </Paper>
                     </Grid>
                     <Grid item xs={12}>
@@ -70,42 +58,37 @@ class SportEventDetailsPage extends React.Component {
                             <Typography color="primary">
                                 Standings
                             </Typography>
-                            <StandingsTable standings={this.props.standings}/>
+                            <StandingsTable standings={this.props.standings} />
                         </Paper>
                     </Grid>
                     <Grid item xs={12}>
                         <Paper>
-                            <AddTeamForm sportEventId={match.params.id}/>
+                            <AddTeamForm sportEventId={match.params.id} />
                         </Paper>
                     </Grid>
                 </Grid>
                 <Button variant="fab"
-                        onClick={this.handleClickOpen}
-                        className={classes.fab}
-                        color="primary"
-                        disabled={!auth.user.isAuthenticated}>
-                    <AddIcon/>
+                    onClick={this.props.openMatchResultDialog}
+                    className={classes.fab}
+                    color="primary"
+                    disabled={!auth.user.isAuthenticated}>
+                    <AddIcon />
                 </Button>
-                <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                    transition={Transition}>
-                    <AddMatchResultForm sportEventId={match.params.id} teams={teams}/>
-                </Dialog>
+                <MatchResultDialog sportEventId={match.params.id} teams={teams} />
             </div>
         );
     }
 }
 
-const MatchesTable = ({matches}) => (
+const MatchesTable = ({ matches }) => (
     <Table>
         <TableBody>
-            <MatchRows matches={matches}/>
+            <MatchRows matches={matches} />
         </TableBody>
     </Table>
 );
 
-const StandingsTable = ({standings}) => (
+const StandingsTable = ({ standings }) => (
     <Table>
         <TableHead>
             <TableRow>
@@ -123,12 +106,12 @@ const StandingsTable = ({standings}) => (
             </TableRow>
         </TableHead>
         <TableBody>
-            <StandingsRows standings={standings}/>
+            <StandingsRows standings={standings} />
         </TableBody>
     </Table>
 );
 
-const MatchRows = ({matches}) => (
+const MatchRows = ({ matches }) => (
     matches.map(match => (
         <TableRow>
             <TableCell>{match.teamA.name}</TableCell>
@@ -140,7 +123,7 @@ const MatchRows = ({matches}) => (
 );
 
 
-const StandingsRows = ({standings}) => (
+const StandingsRows = ({ standings }) => (
     standings.map(standing => (
         <TableRow>
             <TableCell>{standing.team}</TableCell>
@@ -172,6 +155,7 @@ const mapDispatchToProps = {
     loadMatches: loadMatches,
     loadStandings: loadStandings,
     loadTeams: loadTeams,
+    openMatchResultDialog: openMatchResultDialog
 };
 
 
