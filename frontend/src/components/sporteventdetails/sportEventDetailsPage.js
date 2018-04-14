@@ -10,7 +10,7 @@ import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import {withStyles} from 'material-ui/styles';
 import {Button, Dialog, Hidden, Slide} from "material-ui";
-import AddIcon from 'material-ui-icons/Add';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = theme => ({
     grid: {

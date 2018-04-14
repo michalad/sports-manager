@@ -9,7 +9,7 @@ import {FormControl} from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import {Divider, List, ListItem, ListItemIcon, ListItemText} from "material-ui";
-import InboxIcon from 'material-ui-icons/Event';
+import InboxIcon from '@material-ui/icons/Event';
 import Moment from "moment/moment";
 import {Link} from "react-router-dom";
 
